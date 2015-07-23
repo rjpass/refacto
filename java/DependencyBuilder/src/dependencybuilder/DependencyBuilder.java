@@ -75,6 +75,9 @@ public class DependencyBuilder {
                 String value = buildProp.getProperty(keyString);
                 int sIndex = value.lastIndexOf('\\') + 1;
                 int eIndex = value.lastIndexOf(".");
+                if(sIndex == 0 || eIndex < sIndex)
+                    continue;
+                
                 String parsedValue = value.substring(sIndex, eIndex);
                 pomXML += "\n        <dependency>\n" +
                     "            <groupId>com.cleo</groupId>\n" +

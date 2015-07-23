@@ -1,5 +1,33 @@
 #!/bin/sh
 
+# usage:	Moves a project to mvn structure, moves code to mvn structure, updates dependencies to mvn structure
+# returns:	Nothing
+moveProject() {
+	local projectName oldProjectLocation newProjectLocation
+	projectName=$1
+	oldProjectLocation=$2
+	newProjectLocation=$3
+	projectPath="EFSS/$newProjectLocation/$projectName"
+	mkdir -p "$projectPath/src/main/java"
+	touch "$projectPath/pom.xml"
+	cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java"
+	echo "Moving project $projectName"
+	java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder EFSS/$oldProjectLocation/$projectName EFSS/$newProjectLocation/$projectName $newProjectLocation $projectName
+}
+
+updateModule() {
+	package=$1
+	shift
+	modules=""
+	while [ "$1" != "" ]; do 
+		modules+="$1 "
+		shift
+	done
+
+	java -cp java/DependencyBuilder/build/classes/ dependencybuilder.ModuleBuilder $package $modules
+}
+
+## Main Script ##
 echo "Refacto(r) the Github repo\n\n\n"
 
 #clear the EFSS repo and redownload
@@ -28,4 +56,10 @@ elif [ "$update" == "" ]; then
 fi
 
 echo "\nMigrating new project structure into EFSS repo\n"
-move * EFSS/
+find  * \! -name "EFSS" -maxdepth 0 -exec cp -r {} EFSS \;
+
+echo "\nMigrating projects (base):"
+moveProject common UtilitiesAndServices base
+moveProject mailbean UtilitiesAndServices base
+
+updateModule base common mailbean

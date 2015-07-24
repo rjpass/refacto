@@ -1,7 +1,8 @@
 #!/bin/sh
 
 projectsLocation=()
-projects=()
+projects_base=()
+projects_util=()
 
 # usage:	Moves a project to mvn structure, moves code to mvn structure, updates dependencies to mvn structure
 # returns:	Nothing
@@ -20,7 +21,12 @@ moveProject() {
 	java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder EFSS/$oldProjectLocation/$projectName EFSS/$newProjectLocation/$projectName $newProjectLocation $projectName
 
 	projectsLocation+=("$newProjectLocation/$projectName")
-	projects+=("$projectName")
+	
+	if [ "$newProjectLocation" = "base" ]; then
+		projects_base+=("$projectName")
+	elif [ "$newProjectLocation" = "util" ]; then
+		projects_util+=("$projectName")
+	fi
 }
 
 # usage:	Updates a 'modules' POM for all of the passed in projects.  Syntax $1=module name, $2-x=projects
@@ -93,7 +99,12 @@ moveProject Jcapi ThirdParty base
 moveProject jcifs-1.3.14 ThirdParty/Jcifs base		#this one is a little weird -- look into it
 #moveProject jtnef ThirdParty base
 
-updateModule base ${projects[*]}
+updateModule base ${projects_base[*]}
+
+echo "\nMigrating projects (util):"
+moveProject CertManager UtilitiesAndServices util
+
+updateModule util ${projects_util[*]}
 
 echo "\nBuilding"
 cd EFSS

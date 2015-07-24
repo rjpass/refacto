@@ -76,12 +76,26 @@ public class DependencyBuilder {
                 String value = buildProp.getProperty(keyString);
                 int sIndex = value.lastIndexOf('\\') + 1;
                 int eIndex = value.lastIndexOf(".");
+                
+                boolean slashRight = false;
                 if(sIndex == 0 || eIndex < sIndex)
-                    continue;
+                {
+                    sIndex = value.lastIndexOf('/') + 1;
+                    eIndex = value.lastIndexOf(".");
+                    if(sIndex == 0 || eIndex < sIndex)
+                        continue;
+                    
+                    slashRight = true;
+                }
                 
                 String parsedValue = value.substring(sIndex, eIndex);
                 
-                StringTokenizer st = new StringTokenizer(value, "\\");
+                StringTokenizer st = null;
+                if(slashRight)
+                    st = new StringTokenizer(value, "/");
+                else
+                    st = new StringTokenizer(value, "\\");
+                
                 int i=0;
                 boolean isTest = false;
                 while(st.hasMoreTokens())

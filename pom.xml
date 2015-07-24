@@ -59,8 +59,8 @@
             <!-- Official Cleo's repository -->
             <id>cleo_repo</id>
             <name>Cleo's Repository</name>
-            <!--  <url>http://10.80.80.157:8081/nexus/content/groups/public/</url> -->
-            <url>http://contd.cleo.com/nexus/content/groups/public/</url>
+             <url>http://10.80.80.157:8081/nexus/content/groups/public/</url>
+            <!-- <url>http://contd.cleo.com/nexus/content/groups/public/</url> -->
             <releases>
                 <updatePolicy>never</updatePolicy>
             </releases>

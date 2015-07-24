@@ -3,22 +3,36 @@
 projectsLocation=()
 projects_base=()
 projects_util=()
+projects_api=()
 
 # usage:	Moves a project to mvn structure, moves code to mvn structure, updates dependencies to mvn structure
 # returns:	Nothing
 moveProject() {
-	local projectName oldProjectLocation newProjectLocation
+	local projectName oldProjectLocation newProjectLocation alreadyMaven
 	projectName=$1
 	oldProjectLocation=$2
 	newProjectLocation=$3
+	alreadyMaven=$4
 	projectPath="EFSS/$newProjectLocation/$projectName"
-	mkdir -p "$projectPath/src/main/java"
-	mkdir -p "$projectPath/src/test/java"
-	cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java" 2>/dev/null
-	cp -R "EFSS/$oldProjectLocation/$projectName/test/" "$projectPath/src/test/java" 2>/dev/null
+
+	if [ "$alreadyMaven" = "" ]; then
+		mkdir -p "$projectPath/src/main/java"
+		mkdir -p "$projectPath/src/test/java"
+		cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java" 2>/dev/null
+		cp -R "EFSS/$oldProjectLocation/$projectName/test/" "$projectPath/src/test/java" 2>/dev/null
+	else
+		mkdir -p "$projectPath"
+		cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src" 2>/dev/null
+	fi
+
 	rsync -aq --exclude='nbproject/' --exclude='build*.xml' --exclude='src/' --exclude='test/' EFSS/$oldProjectLocation/$projectName/* $projectPath
-	echo "    Moving project $projectName"
-	java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder EFSS/$oldProjectLocation/$projectName EFSS/$newProjectLocation/$projectName $newProjectLocation $projectName
+	
+	if [ "$alreadyMaven" = "" ]; then
+		echo "    Moving project $projectName"
+		java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder EFSS/$oldProjectLocation/$projectName EFSS/$newProjectLocation/$projectName $newProjectLocation $projectName
+	else
+		echo "    Moving project $projectName (already Mavenized)"
+	fi
 
 	projectsLocation+=("$newProjectLocation/$projectName")
 	
@@ -26,6 +40,8 @@ moveProject() {
 		projects_base+=("$projectName")
 	elif [ "$newProjectLocation" = "util" ]; then
 		projects_util+=("$projectName")
+	elif [ "$newProjectLocation" = "api" ]; then
+		projects_api+=("$projectName")
 	fi
 }
 
@@ -112,8 +128,15 @@ moveProject snmpagent UtilitiesAndServices util
 #moveProject j2ssh ThirdParty util 
 #moveProject HTTPClient ThirdParty util 
 
-
 updateModule util ${projects_util[*]}
+
+echo "\nMigrating projects (api):"
+moveProject LexAPI_POJO UtilitiesAndServices api alreadyMaven
+moveProject LexAPI UtilitiesAndServices api 
+moveProject lexbean ProtocolBeans api 
+moveProject lexhelp UtilitiesAndServices api alreadyMaven
+
+updateModule api ${projects_api[*]}
 
 echo "\nBuilding"
 cd EFSS

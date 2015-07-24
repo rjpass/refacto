@@ -13,23 +13,23 @@ moveProject() {
 	oldProjectLocation=$2
 	newProjectLocation=$3
 	alreadyMaven=$4
-	projectPath="EFSS/$newProjectLocation/$projectName"
+	projectPath="../efss-maven/$newProjectLocation/$projectName"
 
 	if [ "$alreadyMaven" = "" ]; then
 		mkdir -p "$projectPath/src/main/java"
 		mkdir -p "$projectPath/src/test/java"
-		cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java" 2>/dev/null
-		cp -R "EFSS/$oldProjectLocation/$projectName/test/" "$projectPath/src/test/java" 2>/dev/null
+		cp -R "../efss-maven/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java" 2>/dev/null
+		cp -R "../efss-maven/$oldProjectLocation/$projectName/test/" "$projectPath/src/test/java" 2>/dev/null
 	else
 		mkdir -p "$projectPath"
-		cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src" 2>/dev/null
+		cp -R "../efss-maven/$oldProjectLocation/$projectName/src/" "$projectPath/src" 2>/dev/null
 	fi
 
-	rsync -aq --exclude='nbproject/' --exclude='build*.xml' --exclude='src/' --exclude='test/' EFSS/$oldProjectLocation/$projectName/* $projectPath
+	rsync -aq --exclude='nbproject/' --exclude='build*.xml' --exclude='src/' --exclude='test/' ../efss-maven/$oldProjectLocation/$projectName/* $projectPath
 	
 	if [ "$alreadyMaven" = "" ]; then
 		echo "    Moving project $projectName"
-		java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder EFSS/$oldProjectLocation/$projectName EFSS/$newProjectLocation/$projectName $newProjectLocation $projectName
+		java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder ../efss-maven/$oldProjectLocation/$projectName ../efss-maven/$newProjectLocation/$projectName $newProjectLocation $projectName
 	else
 		echo "    Moving project $projectName (already Mavenized)"
 	fi
@@ -63,8 +63,8 @@ updateModule() {
 # usage:	Diffs a jar created with mvn with the one from lib hydrator
 # returns: 	0 = same, 1 = different
 doDiff() {
-	echo "Diffing EFSS/$1/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar ~/VersaLex/$2.jar"
-	return diff "EFSS/$1/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar" ~/VersaLex/$2.jar > /dev/null 2>&1
+	echo "Diffing ../efss-maven/$1/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar ~/VersaLex/$2.jar"
+	return diff "../efss-maven/$1/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar" ~/VersaLex/$2.jar > /dev/null 2>&1
 	#return $?
 }
 
@@ -88,17 +88,17 @@ while [ "$1" != "" ]; do
 done
 
 echo "Downloading the EFSS repo\n"
-if [ ! -d "EFSS" ] || [ "$clear" = "true" ]; then
-	rm -rf "EFSS"
-	git clone git@github.com:CleoDev/EFSS.git
+if [ ! -d "../efss-maven" ] || [ "$clear" = "true" ]; then
+	rm -rf "../efss-maven"
+	git clone git@github.com:CleoDev/EFSS.git ../efss-maven
 elif [ "$update" == "" ]; then
-	echo "EFSS repo already exists.  Run -c to delete and re-download, or -u to run update on existing EFSS repo"
+	echo "EFSS repo already exists (efss-maven).  Run -c to delete and re-download, or -u to run update on existing EFSS repo"
 	exit 
 fi
 
-echo "\nMigrating new project structure into EFSS repo\n"
+echo "\nMigrating new project structure into EFSS (efss-maven) repo\n"
 #find  * \! -name "EFSS" -maxdepth 0 -exec cp -r {} EFSS \;
-rsync -a --exclude='EFSS/' --exclude='java/' --exclude='refacto.sh' . EFSS
+rsync -a --exclude='EFSS/' --exclude='java/' --exclude='refacto.sh' new-structure/* ../efss-maven
 
 
 echo "\nMigrating projects (base):"
@@ -139,8 +139,8 @@ moveProject lexhelp UtilitiesAndServices api alreadyMaven
 updateModule api ${projects_api[*]}
 
 echo "\nBuilding"
-cd EFSS
-mvn -DskipTests -l ../mvn.log				# tests can't build
+cd ../efss-maven
+mvn -DskipTests -l ../refacto/mvn.log				# tests can't build
 #mvn -l ../mvn.log
 mvnStatus=$?
 if [ $mvnStatus = 0 ]; then
@@ -148,7 +148,7 @@ if [ $mvnStatus = 0 ]; then
 else
 	echo "    ------MVN Build FAILED------"
 fi
-cd ..
+cd ../refacto
 
 # echo "\nDiffing jars"
 # cd EFSS/meta

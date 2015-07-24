@@ -54,7 +54,7 @@ public class ModuleBuilder {
         //Write updated POM to disk
         BufferedWriter bw = null;
         try {
-            bw = new BufferedWriter(new FileWriter(new File("EFSS/" + packageName + "/pom.xml")));
+            bw = new BufferedWriter(new FileWriter(new File("../efss-maven/" + packageName + "/pom.xml")));
             bw.write(pomXML);
         } catch(IOException e) {
             e.printStackTrace();

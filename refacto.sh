@@ -32,6 +32,7 @@ moveProject() {
 		java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder ../efss-maven/$oldProjectLocation/$projectName ../efss-maven/$newProjectLocation/$projectName $newProjectLocation $projectName
 	else
 		echo "    Moving project $projectName (already Mavenized)"
+		java -cp java/DependencyBuilder/build/classes/ dependencybuilder.MavenHacker ../efss-maven/$newProjectLocation/$projectName ../efss-maven/$oldProjectLocation/$projectName/pom.xml $newProjectLocation $projectName
 	fi
 
 	projectsLocation+=("$newProjectLocation/$projectName")
@@ -63,9 +64,29 @@ updateModule() {
 # usage:	Diffs a jar created with mvn with the one from lib hydrator
 # returns: 	0 = same, 1 = different
 doDiff() {
-	echo "Diffing ../efss-maven/$1/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar ~/VersaLex/$2.jar"
-	return diff "../efss-maven/$1/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar" ~/VersaLex/$2.jar > /dev/null 2>&1
-	#return $?
+	cd ~/code/refacto
+	mkdir temp1
+	cd temp1
+	jar xf ../../efss-maven/$1/$2/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar > /dev/null 2>&1
+	rm -rf META-INF/
+
+	cd ..
+	mkdir temp2
+	cd temp2
+	jar xf ~/VersaLex/lib/$2.jar > /dev/null 2>&1
+	rm -rf META-INF/
+
+	diff ../temp1/ . > /dev/null 2>&1
+	retVal=$?
+
+	cd ..
+	rm -rf temp1
+	rm -rf temp2
+
+	echo $retVal
+
+	# return diff "../efss-maven/$1/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar" ~/VersaLex/$2.jar > /dev/null 2>&1
+	# #return $?
 }
 
 ## Main Script ##
@@ -150,17 +171,20 @@ else
 fi
 cd ../refacto
 
-# echo "\nDiffing jars"
-# cd EFSS/meta
-# mvn -Plinux > /dev/null 2>&1
-# cd ../..
-# for i in "${projectsLocation[@]}"
-# do
-# 	result=doDiff $i
-# 	if [ result != 0 ]; then
-# 		echo "$i is not the same!"
-# 	fi
-# done
+echo "\nDiffing jars"
+cd ~/code/efss-maven/meta
+mvn -Plinux > /dev/null 2>&1
+cd ~/code/refacto
+for i in "${projects_base[@]}"
+do
+	printf "Diffing $i... "
+	result=$(doDiff base $i)
+	if [ "$result" != "0" ]; then
+		printf "not the same!  ***********\n"
+	else
+		printf "validated\n"
+	fi
+done
 
 # echo "\nCleaning up old directories"
 

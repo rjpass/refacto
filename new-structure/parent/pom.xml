@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>com.cleo</groupId>
+        <artifactId>efss</artifactId>
+        <version>5.2.1-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.cleo</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Cleo :: Parent</name>
+
+    <description>
+        Version information for Cleo (dependencies)
+    </description>
+
+    <!-- Properties -->
+    <properties>
+        <karaf.version>3.0.3</karaf.version>
+        <osgi-jax-rs-connector.version>4.3</osgi-jax-rs-connector.version>
+        <elasticsearch.version>1.6.0_1</elasticsearch.version>
+    </properties>
+
+
+    <!-- Managed Dependencies -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Karaf -->
+            <dependency>
+                <groupId>org.apache.karaf</groupId>
+                <artifactId>karaf</artifactId>
+                <version>${karaf.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.karaf</groupId>
+                <artifactId>apache-karaf</artifactId>
+                <version>${karaf.version}</version>
+                <type>tar.gz</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.karaf</groupId>
+                <artifactId>apache-karaf</artifactId>
+                <version>${karaf.version}</version>
+                <type>zip</type>
+            </dependency>
+            
+            <!-- osgi-jax-rs-connector -->
+            <dependency>
+                <groupId>com.eclipsesource.jaxrs</groupId>
+                <artifactId>features</artifactId>
+                <version>${osgi-jax-rs-connector.version}</version>
+                <type>xml</type>
+                <classifier>features</classifier>
+            </dependency>
+            
+            <!-- elasticsearch -->
+            <dependency>
+                <groupId>org.apache.servicemix.bundles</groupId>
+                <artifactId>org.apache.servicemix.bundles.elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

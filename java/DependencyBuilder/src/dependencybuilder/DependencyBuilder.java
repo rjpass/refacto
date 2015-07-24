@@ -32,10 +32,8 @@ public class DependencyBuilder {
         String parent = args[2];
         String project = args[3];
         
-        String parentCaps = parent.substring(0,1).toUpperCase() + parent.substring(1);
-        
         //load the project.properties file
-            String buildXML = oldProjectLocation + "/" + "nbproject/project.properties";
+        String buildXML = oldProjectLocation + "/" + "nbproject/project.properties";
         Properties buildProp = new Properties();
         
         FileInputStream inputStream = null;
@@ -48,25 +46,8 @@ public class DependencyBuilder {
             if(inputStream != null) try {inputStream.close();} catch(IOException exx) {}
         }
         
-        String pomXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-            "<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n" +
-            "\n" +
-            "    <modelVersion>4.0.0</modelVersion>\n" +
-            "\n" +
-            "    <parent>\n" +
-            "        <artifactId>" + parent + "</artifactId>\n" +
-            "        <groupId>com.cleo." + parent + "</groupId>\n" +
-            "        <version>5.2.1-SNAPSHOT</version>\n" +
-            "    </parent>\n" +
-            "\n" +
-            "    <artifactId>com.cleo." + parent + "." + project + "</artifactId>\n" +
-            "    <packaging>jar</packaging>\n" +
-            "    <name>Cleo :: " + parentCaps + " :: " + project + "</name>\n" +
-            "\n" +
-            "    <properties>\n" +
-            "        <cleo.version>5.2-SNAPSHOT</cleo.version>\n" + 
-            "    </properties>\n\n" +
-            "    <dependencies>";
+        POM pom = new POM();
+        String pomXML = pom.getPOMStart(parent, project);
         
         for(Object key : buildProp.keySet())
         {
@@ -112,21 +93,11 @@ public class DependencyBuilder {
                     ++i;
                 }
                 
-                pomXML += "\n        <dependency>\n" +
-                    "            <groupId>com.cleo</groupId>\n" +
-                    "            <artifactId>" + parsedValue + "</artifactId>\n" +
-                    "            <version>${cleo.version}</version>\n";
-                
-                if(isTest)
-                    pomXML += 
-                    "            <scope>test</scope>\n";
-                
-                pomXML +=
-                    "        </dependency>";
+                pomXML += pom.buildDependency(parsedValue, isTest);
             }
         }
         
-        pomXML += "\n    </dependencies>";
+        pomXML += pom.finishDependencies();
         
         //stupid jcapi... doesn't use UTF-8 files
         if(project.toLowerCase().equals("jcapi"))
@@ -149,17 +120,8 @@ public class DependencyBuilder {
                 "    </build>";
         }
         
-        pomXML += "\n</project>";
+        pomXML += pom.finishPOM();
         
-        //Write updated POM to disk
-        BufferedWriter bw = null;
-        try {
-            bw = new BufferedWriter(new FileWriter(new File(newProjectLocation + "/pom.xml")));
-            bw.write(pomXML);
-        } catch(IOException e) {
-            
-        } finally {
-            if(bw != null) try { bw.close(); } catch(IOException exx) {}
-        }
+        pom.writePOM(newProjectLocation, pomXML);
     }
 }

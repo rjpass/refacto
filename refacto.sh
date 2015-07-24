@@ -12,8 +12,10 @@ moveProject() {
 	newProjectLocation=$3
 	projectPath="EFSS/$newProjectLocation/$projectName"
 	mkdir -p "$projectPath/src/main/java"
-	touch "$projectPath/pom.xml"
+	mkdir -p "$projectPath/src/test/java"
 	cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java"
+	cp -R "EFSS/$oldProjectLocation/$projectName/test/" "$projectPath/src/test/java"
+	#rsync -a --exclude='nbproject/' --exclude='build*.xml' --exclude='src/' --exclude='test/' "EFSS/$oldProjectLocation/$projectName/*" "$projectPath"
 	echo "Moving project $projectName"
 	java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder EFSS/$oldProjectLocation/$projectName EFSS/$newProjectLocation/$projectName $newProjectLocation $projectName
 
@@ -73,7 +75,9 @@ elif [ "$update" == "" ]; then
 fi
 
 echo "\nMigrating new project structure into EFSS repo\n"
-find  * \! -name "EFSS" -maxdepth 0 -exec cp -r {} EFSS \;
+#find  * \! -name "EFSS" -maxdepth 0 -exec cp -r {} EFSS \;
+rsync -a --exclude='EFSS/' --exclude='java/' --exclude='refacto.sh' . EFSS
+
 
 echo "\nMigrating projects (base):"
 moveProject common UtilitiesAndServices base
@@ -86,12 +90,14 @@ moveProject aspirin ThirdParty base
 #moveProject CLJRDeploy UtilitiesAndServices base
 moveProject vaadin-recaptcha UtilitiesAndServices base
 moveProject Jcapi ThirdParty base
+moveProject jcifs-1.3.14 ThirdParty/Jcifs base		#this one is a little weird -- look into it
+#moveProject jtnef ThirdParty base
 
 updateModule base ${projects[*]}
 
 echo "\nBuilding"
 cd EFSS
-mvn
+mvn -DskipTests
 cd -
 
 # echo "\nDiffing jars"

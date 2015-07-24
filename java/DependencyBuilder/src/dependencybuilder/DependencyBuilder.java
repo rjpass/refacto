@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -79,15 +80,59 @@ public class DependencyBuilder {
                     continue;
                 
                 String parsedValue = value.substring(sIndex, eIndex);
+                
+                StringTokenizer st = new StringTokenizer(value, "\\");
+                int i=0;
+                boolean isTest = false;
+                while(st.hasMoreTokens())
+                {
+                    String nextToken = st.nextToken();
+                    if(nextToken.equals("test") && !project.toLowerCase().equals("jcapi"))
+                    {
+                        isTest = true;
+                        break;
+                    }
+                    
+                    ++i;
+                }
+                
                 pomXML += "\n        <dependency>\n" +
                     "            <groupId>com.cleo</groupId>\n" +
                     "            <artifactId>" + parsedValue + "</artifactId>\n" +
-                    "            <version>${cleo.version}</version>\n" +     
+                    "            <version>${cleo.version}</version>\n";
+                
+                if(isTest)
+                    pomXML += 
+                    "            <scope>test</scope>\n";
+                
+                pomXML +=
                     "        </dependency>";
             }
         }
         
         pomXML += "\n    </dependencies>";
+        
+        //stupid jcapi...
+        if(project.toLowerCase().equals("jcapi"))
+        {
+            pomXML += "\n\n    <build>\n" +
+                "        <plugins>\n" +
+                "            <plugin>\n" +
+                "                <groupId>org.apache.maven.plugins</groupId>\n" +
+                "                <artifactId>maven-compiler-plugin</artifactId>\n" +
+                "                <configuration>\n" +
+                "                    <source>${maven.compiler.source}</source>\n" +
+                "                    <target>${maven.compiler.target}</target>\n" +
+                "                    <debug>${maven.compiler.debug}</debug>\n" +
+                "                    <encoding>ISO-8859-1</encoding>\n" +
+                "                    <maxmem>256M</maxmem>\n" +
+                "                    <fork>${compiler.fork}</fork>\n" +
+                "                </configuration>\n" +
+                "            </plugin>\n" +
+                "        </plugins>\n" +
+                "    </build>";
+        }
+        
         pomXML += "\n</project>";
         
         //Write updated POM to disk

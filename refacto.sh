@@ -14,10 +14,10 @@ moveProject() {
 	projectPath="EFSS/$newProjectLocation/$projectName"
 	mkdir -p "$projectPath/src/main/java"
 	mkdir -p "$projectPath/src/test/java"
-	cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java"
-	cp -R "EFSS/$oldProjectLocation/$projectName/test/" "$projectPath/src/test/java"
+	cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java" 2>/dev/null
+	cp -R "EFSS/$oldProjectLocation/$projectName/test/" "$projectPath/src/test/java" 2>/dev/null
 	rsync -aq --exclude='nbproject/' --exclude='build*.xml' --exclude='src/' --exclude='test/' EFSS/$oldProjectLocation/$projectName/* $projectPath
-	echo "Moving project $projectName"
+	echo "    Moving project $projectName"
 	java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder EFSS/$oldProjectLocation/$projectName EFSS/$newProjectLocation/$projectName $newProjectLocation $projectName
 
 	projectsLocation+=("$newProjectLocation/$projectName")
@@ -103,13 +103,29 @@ updateModule base ${projects_base[*]}
 
 echo "\nMigrating projects (util):"
 moveProject CertManager UtilitiesAndServices util
+moveProject WebServer Servers util 
+moveProject SmtpServer Servers util 
+moveProject FtpServer Servers util 
+moveProject SftpServer Servers util 
+#moveProject updnd UtilitiesAndServices util 
+moveProject snmpagent UtilitiesAndServices util 
+#moveProject j2ssh ThirdParty util 
+#moveProject HTTPClient ThirdParty util 
+
 
 updateModule util ${projects_util[*]}
 
 echo "\nBuilding"
 cd EFSS
-mvn -DskipTests
-cd -
+mvn -DskipTests -l ../mvn.log				# tests can't build
+#mvn -l ../mvn.log
+mvnStatus=$?
+if [ $mvnStatus = 0 ]; then
+	echo "    MVN Build Successful"
+else
+	echo "    ------MVN Build FAILED------"
+fi
+cd ..
 
 # echo "\nDiffing jars"
 # cd EFSS/meta

@@ -101,7 +101,9 @@ public class DependencyBuilder {
                 while(st.hasMoreTokens())
                 {
                     String nextToken = st.nextToken();
-                    if(nextToken.equals("test") && !project.toLowerCase().equals("jcapi"))
+                    if(nextToken.equals("test") && 
+                            !project.toLowerCase().equals("jcapi") &&
+                            !project.toLowerCase().equals("httpclient"))
                     {
                         isTest = true;
                         break;
@@ -126,7 +128,7 @@ public class DependencyBuilder {
         
         pomXML += "\n    </dependencies>";
         
-        //stupid jcapi...
+        //stupid jcapi... doesn't use UTF-8 files
         if(project.toLowerCase().equals("jcapi"))
         {
             pomXML += "\n\n    <build>\n" +

@@ -15,7 +15,7 @@ moveProject() {
 	mkdir -p "$projectPath/src/test/java"
 	cp -R "EFSS/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java"
 	cp -R "EFSS/$oldProjectLocation/$projectName/test/" "$projectPath/src/test/java"
-	#rsync -a --exclude='nbproject/' --exclude='build*.xml' --exclude='src/' --exclude='test/' "EFSS/$oldProjectLocation/$projectName/*" "$projectPath"
+	rsync -aq --exclude='nbproject/' --exclude='build*.xml' --exclude='src/' --exclude='test/' EFSS/$oldProjectLocation/$projectName/* $projectPath
 	echo "Moving project $projectName"
 	java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder EFSS/$oldProjectLocation/$projectName EFSS/$newProjectLocation/$projectName $newProjectLocation $projectName
 

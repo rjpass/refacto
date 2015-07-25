@@ -90,7 +90,7 @@ doDiff() {
 }
 
 ## Main Script ##
-echo "Refacto(r) the Github repo\n\n\n"
+echo "Refacto(r) the Github repo\n"
 
 #clear the EFSS repo and redownload
 clear=""
@@ -98,11 +98,26 @@ clear=""
 #update the EFSS repo -- don't redownload
 update=""
 
+#migrate the projects
+migrate=""
+
+#build the repo once converted
+build=""
+
+#diff the jars after conversion
+dif=""
+
 while [ "$1" != "" ]; do 
 	case $1 in
 		-c | --clear )		clear="true"
 							;;
 		-u | --update )		update="true"
+							;;
+		-m | --migrate )	migrate="true"
+							;;
+		-b | --build )		build="true"
+							;;
+		-d | --diff )		dif="true"
 							;;
 	esac
 	shift
@@ -117,74 +132,80 @@ elif [ "$update" == "" ]; then
 	exit 
 fi
 
-echo "\nMigrating new project structure into EFSS (efss-maven) repo\n"
-#find  * \! -name "EFSS" -maxdepth 0 -exec cp -r {} EFSS \;
-rsync -a --exclude='EFSS/' --exclude='java/' --exclude='refacto.sh' new-structure/* ../efss-maven
+if [ "$migrate" = "true" ]; then	
+	echo "\nMigrating new project structure into EFSS (efss-maven) repo\n"
+	#find  * \! -name "EFSS" -maxdepth 0 -exec cp -r {} EFSS \;
+	rsync -a --exclude='EFSS/' --exclude='java/' --exclude='refacto.sh' new-structure/* ../efss-maven
 
 
-echo "\nMigrating projects (base):"
-moveProject common UtilitiesAndServices base
-moveProject mailbean UtilitiesAndServices base
-moveProject VLMetrics UtilitiesAndServices base
-moveProject XMLLogger UtilitiesAndServices base
-moveProject vlembeddeddb UtilitiesAndServices base
-moveProject dnsjava ThirdParty base
-moveProject aspirin ThirdParty base
-#moveProject CLJRDeploy UtilitiesAndServices base
-moveProject vaadin-recaptcha UtilitiesAndServices base
-moveProject Jcapi ThirdParty base
-moveProject jcifs-1.3.14 ThirdParty/Jcifs base		#this one is a little weird -- look into it
-#moveProject jtnef ThirdParty base
+	echo "\nMigrating projects (base):"
+	moveProject common UtilitiesAndServices base
+	moveProject mailbean UtilitiesAndServices base
+	moveProject VLMetrics UtilitiesAndServices base
+	moveProject XMLLogger UtilitiesAndServices base
+	moveProject vlembeddeddb UtilitiesAndServices base
+	moveProject dnsjava ThirdParty base
+	moveProject aspirin ThirdParty base
+	#moveProject CLJRDeploy UtilitiesAndServices base
+	moveProject vaadin-recaptcha UtilitiesAndServices base
+	moveProject Jcapi ThirdParty base
+	moveProject jcifs-1.3.14 ThirdParty/Jcifs base		#this one is a little weird -- look into it
+	#moveProject jtnef ThirdParty base
 
-updateModule base ${projects_base[*]}
+	updateModule base ${projects_base[*]}
 
-echo "\nMigrating projects (util):"
-moveProject CertManager UtilitiesAndServices util
-moveProject WebServer Servers util 
-moveProject SmtpServer Servers util 
-moveProject FtpServer Servers util 
-moveProject SftpServer Servers util 
-#moveProject updnd UtilitiesAndServices util 
-moveProject snmpagent UtilitiesAndServices util 
-#moveProject j2ssh ThirdParty util 
-#moveProject HTTPClient ThirdParty util 
+	echo "\nMigrating projects (util):"
+	moveProject CertManager UtilitiesAndServices util
+	moveProject WebServer Servers util 
+	moveProject SmtpServer Servers util 
+	moveProject FtpServer Servers util 
+	moveProject SftpServer Servers util 
+	#moveProject updnd UtilitiesAndServices util 
+	moveProject snmpagent UtilitiesAndServices util 
+	#moveProject j2ssh ThirdParty util 
+	#moveProject HTTPClient ThirdParty util 
 
-updateModule util ${projects_util[*]}
+	updateModule util ${projects_util[*]}
 
-echo "\nMigrating projects (api):"
-moveProject LexAPI_POJO UtilitiesAndServices api alreadyMaven
-moveProject LexAPI UtilitiesAndServices api 
-moveProject lexbean ProtocolBeans api 
-moveProject lexhelp UtilitiesAndServices api alreadyMaven
+	echo "\nMigrating projects (api):"
+	moveProject LexAPI_POJO UtilitiesAndServices api alreadyMaven
+	moveProject LexAPI UtilitiesAndServices api 
+	moveProject lexbean ProtocolBeans api 
+	moveProject lexhelp UtilitiesAndServices api alreadyMaven
 
-updateModule api ${projects_api[*]}
-
-echo "\nBuilding"
-cd ../efss-maven
-mvn -DskipTests -l ../refacto/mvn.log				# tests can't build
-#mvn -l ../mvn.log
-mvnStatus=$?
-if [ $mvnStatus = 0 ]; then
-	echo "    MVN Build Successful"
-else
-	echo "    ------MVN Build FAILED------"
+	updateModule api ${projects_api[*]}
 fi
+
+if [ "$build" = "true" ]; then
+	echo "\nBuilding"
+	cd ../efss-maven
+	mvn -DskipTests -l ../refacto/mvn.log				# tests can't build
+	#mvn -l ../mvn.log
+	mvnStatus=$?
+	if [ $mvnStatus = 0 ]; then
+		echo "    MVN Build Successful"
+	else
+		echo "    ------MVN Build FAILED------"
+	fi
+fi
+
 cd ../refacto
 
-echo "\nDiffing jars"
-cd ~/code/efss-maven/meta
-mvn -Plinux > /dev/null 2>&1
-cd ~/code/refacto
-for i in "${projects_base[@]}"
-do
-	printf "Diffing $i... "
-	result=$(doDiff base $i)
-	if [ "$result" != "0" ]; then
-		printf "not the same!  ***********\n"
-	else
-		printf "validated\n"
-	fi
-done
-
+if [ "$dif" = "true" ]; then
+	echo "\nDiffing jars"
+	cd ~/code/efss-maven/meta
+	mvn -Plinux > /dev/null 2>&1
+	cd ~/code/refacto
+	for i in "${projects_base[@]}"
+	do
+		printf "Diffing $i... "
+		result=$(doDiff base $i)
+		if [ "$result" != "0" ]; then
+			printf "not the same!  ***********\n"
+		else
+			printf "validated\n"
+		fi
+	done
+fi
 # echo "\nCleaning up old directories"
 

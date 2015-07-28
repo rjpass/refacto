@@ -4,6 +4,7 @@ projectsLocation=()
 projects_base=()
 projects_util=()
 projects_api=()
+projects_protocol=()
 
 # usage:	Moves a project to mvn structure, moves code to mvn structure, updates dependencies to mvn structure
 # returns:	Nothing
@@ -43,6 +44,8 @@ moveProject() {
 		projects_util+=("$projectName")
 	elif [ "$newProjectLocation" = "api" ]; then
 		projects_api+=("$projectName")
+	elif [ "$newProjectLocation" = "protocol" ]; then
+		projects_protocol+=("$projectName")
 	fi
 }
 
@@ -76,7 +79,11 @@ doDiff() {
 	jar xf ~/VersaLex/lib/$2.jar > /dev/null 2>&1
 	rm -rf META-INF/
 
-	diff ../temp1/ . > /dev/null 2>&1
+	#hack the 8th byte of the class file to avoid source discrepencies
+	#see class layout at https://en.wikipedia.org/wiki/Java_class_file#General_layout
+	find . -name \*.class -execdir sh -c "echo {}; printf '\x33' | dd of={} bs=1 seek=7 conv=notrunc" \; > /dev/null 2>&1
+
+	diff -r ../temp1/ . > /dev/null 2>&1
 	retVal=$?
 
 	cd ..
@@ -84,9 +91,6 @@ doDiff() {
 	rm -rf temp2
 
 	echo $retVal
-
-	# return diff "../efss-maven/$1/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar" ~/VersaLex/$2.jar > /dev/null 2>&1
-	# #return $?
 }
 
 ## Main Script ##
@@ -137,6 +141,8 @@ if [ "$migrate" = "true" ]; then
 	#find  * \! -name "EFSS" -maxdepth 0 -exec cp -r {} EFSS \;
 	rsync -a --exclude='EFSS/' --exclude='java/' --exclude='refacto.sh' new-structure/* ../efss-maven
 
+	projects_protocol+=("megacol")
+
 
 	echo "\nMigrating projects (base):"
 	moveProject common UtilitiesAndServices base
@@ -174,6 +180,8 @@ if [ "$migrate" = "true" ]; then
 	moveProject lexhelp UtilitiesAndServices api alreadyMaven
 
 	updateModule api ${projects_api[*]}
+
+	updateModule protocol ${projects_protocol[*]}
 fi
 
 if [ "$build" = "true" ]; then

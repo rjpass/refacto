@@ -170,6 +170,7 @@ if [ "$migrate" = "true" ]; then
 	moveProject snmpagent UtilitiesAndServices util 
 	#moveProject j2ssh ThirdParty util 
 	#moveProject HTTPClient ThirdParty util 
+	moveProject hsp-api UtilitiesAndServices util alreadyMaven
 
 	updateModule util ${projects_util[*]}
 
@@ -183,6 +184,24 @@ if [ "$migrate" = "true" ]; then
 
 	echo "\nMigrating projects (protocol):"
 	moveProject as2bean ProtocolBeans protocol
+	moveProject dcebmxhttpsbean ProtocolBeans protocol
+	moveProject ebicsbean ProtocolBeans protocol
+	moveProject ebxmlbean ProtocolBeans protocol
+	moveProject faspbean ProtocolBeans protocol
+	moveProject ftpbean ProtocolBeans protocol
+	moveProject ftpsbean ProtocolBeans protocol
+	moveProject hspbean ProtocolBeans protocol alreadyMaven
+	moveProject httpbean ProtocolBeans protocol
+	moveProject httpsbean ProtocolBeans protocol
+	moveProject mllpbean ProtocolBeans protocol
+	moveProject mqbean ProtocolBeans protocol
+	moveProject oftpbean ProtocolBeans protocol
+	moveProject rosettabean ProtocolBeans protocol
+	moveProject smtpbean ProtocolBeans protocol
+	moveProject smtpsbean ProtocolBeans protocol
+	moveProject sshftpbean ProtocolBeans protocol
+	moveProject streembean ProtocolBeans protocol
+	moveProject wsbean ProtocolBeans protocol
 
 	updateModule protocol ${projects_protocol[*]}
 fi

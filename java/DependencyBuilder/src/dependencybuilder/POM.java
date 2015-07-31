@@ -25,8 +25,8 @@ public class POM {
             "    <modelVersion>4.0.0</modelVersion>\n" +
             "\n" +
             "    <parent>\n" +
-            "        <artifactId>" + parent + "</artifactId>\n" +
             "        <groupId>com.cleo." + parent + "</groupId>\n" +
+            "        <artifactId>" + parent + "</artifactId>\n" +
             "        <version>5.2.1-SNAPSHOT</version>\n" +
             "    </parent>\n" +
             "\n" +

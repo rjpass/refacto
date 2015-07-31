@@ -39,29 +39,35 @@ public class MavenHacker {
                 {
                     boolean isJunit = false;
                     boolean isMockito = false;
+                    
                     outFile += '\n' + line + '\n';
                     while((line=br.readLine()) != null && !line.trim().startsWith("</dependency>")) {
                         if(line.trim().startsWith("<groupId>junit"))
                             isJunit = true;
                         if(line.trim().startsWith("<groupId>org.mockito"))
                             isMockito = true;
-                        if(line.trim().startsWith("<version>${"))
+                        
+                        if(line.trim().startsWith("<groupId>${project.groupId}"))
+                            outFile += "        <groupId>com.cleo</groupId>\n";
+                        else if(line.trim().startsWith("<version>${") || 
+                                (line.trim().startsWith("<version>") && isJunit) ||
+                                (line.trim().startsWith("<version>") && isMockito))
                         {
                             if(isJunit)
                             {
-                                outFile += "      <version>${version.cleo.junit}</version>\n";
+                                outFile += "        <version>${version.cleo.junit}</version>\n";
                                 isJunit = false;
                             }
                             else if(isMockito)
                             {
-                                outFile += "      <version>${version.cleo.mockito-all}</version>\n";
+                                outFile += "        <version>${version.cleo.mockito-all}</version>\n";
                                 isMockito = false;
                             }
                             else
-                                outFile += "      <version>${version.cleo}</version>\n";
+                                outFile += "        <version>${version.cleo}</version>\n";
                         }
                         else
-                            outFile += line + '\n';
+                            outFile += "        " + line.trim() + '\n';
                     }
                     outFile += line + '\n';    //</dependency>
                 }

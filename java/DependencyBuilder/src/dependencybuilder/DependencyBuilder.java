@@ -46,6 +46,8 @@ public class DependencyBuilder {
             if(inputStream != null) try {inputStream.close();} catch(IOException exx) {}
         }
         
+        boolean addedMegacol = false;
+        
         POM pom = new POM();
         String pomXML = pom.getPOMStart(parent, project);
         
@@ -93,7 +95,33 @@ public class DependencyBuilder {
                     ++i;
                 }
                 
-                pomXML += pom.buildDependency(parsedValue, isTest);
+                //reconfigure the protocol beans with megacol to support builds
+                if  ( parent.equals("protocol") && 
+                        (
+                            parsedValue.equals("lexbean") ||
+                            parsedValue.equals("as2bean") ||
+                            parsedValue.equals("ebicsbean") ||
+                            parsedValue.equals("ebxmlbean") ||
+                            parsedValue.equals("ftp") ||
+                            parsedValue.equals("ftps") ||
+                            parsedValue.equals("httpbean") ||
+                            parsedValue.equals("httpsbean") ||
+                            parsedValue.equals("mqbean") ||
+                            parsedValue.equals("oftpbean") ||
+                            parsedValue.equals("rosettabean") ||
+                            parsedValue.equals("smtpbean") ||
+                            parsedValue.equals("wsbean")
+                        )
+                    )
+                {
+                    if(!addedMegacol)
+                        pomXML += pom.buildDependency("megacol", false, "com.cleo.protocol", "5.2.1-SNAPSHOT");
+                    addedMegacol = true;
+                }
+                else
+                {
+                    pomXML += pom.buildDependency(parsedValue, isTest);
+                }
             }
         }
         
@@ -102,22 +130,7 @@ public class DependencyBuilder {
         //stupid jcapi... doesn't use UTF-8 files
         if(project.toLowerCase().equals("jcapi"))
         {
-            pomXML += "\n\n    <build>\n" +
-                "        <plugins>\n" +
-                "            <plugin>\n" +
-                "                <groupId>org.apache.maven.plugins</groupId>\n" +
-                "                <artifactId>maven-compiler-plugin</artifactId>\n" +
-                "                <configuration>\n" +
-                "                    <source>${maven.compiler.source}</source>\n" +
-                "                    <target>${maven.compiler.target}</target>\n" +
-                "                    <debug>${maven.compiler.debug}</debug>\n" +
-                "                    <encoding>ISO-8859-1</encoding>\n" +
-                "                    <maxmem>256M</maxmem>\n" +
-                "                    <fork>${compiler.fork}</fork>\n" +
-                "                </configuration>\n" +
-                "            </plugin>\n" +
-                "        </plugins>\n" +
-                "    </build>";
+            pomXML += pom.updateEncoding("ISO-8859-1");
         }
         
         pomXML += pom.finishPOM();

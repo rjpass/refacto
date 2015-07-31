@@ -9,12 +9,13 @@
         <version>5.2.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>com.cleo.protocol.megacol</artifactId>
+    <groupId>com.cleo.protocol</groupId>
+    <artifactId>megacol</artifactId>
     <packaging>jar</packaging>
     <name>Cleo :: Protocol :: Megacol</name>
 
     <properties>
-        <version.cleo>5.2-SNAPSHOT</version.cleo>
+        <version.cleo>5.2.1-SNAPSHOT</version.cleo>
         <version.cleo.junit>4.10</version.cleo.junit>
         <version.cleo.mockito-all>1.9.5</version.cleo.mockito-all>
     </properties>
@@ -125,36 +126,4 @@
           </plugin>
         </plugins>
       </build>
-
-    <!-- <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <executions>
-                    <execution>
-                        <id>unpack</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.cleo</groupId>
-                                    <artifactId>as2bean</artifactId>
-                                    <version>${version.cleo}</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                    <includes>**/*.class</includes>
-                                    <excludes>**/*test.class</excludes>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build> -->
 </project>

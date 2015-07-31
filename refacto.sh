@@ -181,6 +181,9 @@ if [ "$migrate" = "true" ]; then
 
 	updateModule api ${projects_api[*]}
 
+	echo "\nMigrating projects (protocol):"
+	moveProject as2bean ProtocolBeans protocol
+
 	updateModule protocol ${projects_protocol[*]}
 fi
 
@@ -199,7 +202,7 @@ fi
 
 cd ../refacto
 
-if [ "$dif" = "true" ]; then
+if [ "$dif" = "true" ] && [ $mvnStatus = 0 ]; then
 	echo "\nDiffing jars"
 	cd ~/code/efss-maven/meta
 	mvn -Plinux > /dev/null 2>&1

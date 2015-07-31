@@ -30,7 +30,8 @@ public class POM {
             "        <version>5.2.1-SNAPSHOT</version>\n" +
             "    </parent>\n" +
             "\n" +
-            "    <artifactId>com.cleo." + parent + "." + project + "</artifactId>\n" +
+            "    <groupId>com.cleo." + parent + "</groupId>\n" + 
+            "    <artifactId>" + project + "</artifactId>\n" +
             "    <packaging>jar</packaging>\n" +
             "    <name>Cleo :: " + parentCaps + " :: " + project + "</name>\n" +
             "\n" +
@@ -42,12 +43,18 @@ public class POM {
             "    <dependencies>";
     }
     
+    
     public String buildDependency(String artifactId, boolean isTest)
     {
+        return buildDependency(artifactId, isTest, "com.cleo", "${version.cleo}");
+    }
+    
+    public String buildDependency(String artifactId, boolean isTest, String groupId, String versionNumber)
+    {
         String pomXML =         "\n        <dependency>\n" +
-                                "            <groupId>com.cleo</groupId>\n" +
+                                "            <groupId>" + groupId + "</groupId>\n" +
                                 "            <artifactId>" + artifactId + "</artifactId>\n" +
-                                "            <version>${version.cleo}</version>\n";
+                                "            <version>" + versionNumber + "</version>\n";
         
         if(isTest)
             pomXML += "            <scope>test</scope>\n";
@@ -60,6 +67,25 @@ public class POM {
     
     public String finishDependencies() {
         return "\n    </dependencies>";
+    }
+    
+    public String updateEncoding(String encoding) {
+        return  "\n\n    <build>\n" +
+                "        <plugins>\n" +
+                "            <plugin>\n" +
+                "                <groupId>org.apache.maven.plugins</groupId>\n" +
+                "                <artifactId>maven-compiler-plugin</artifactId>\n" +
+                "                <configuration>\n" +
+                "                    <source>${maven.compiler.source}</source>\n" +
+                "                    <target>${maven.compiler.target}</target>\n" +
+                "                    <debug>${maven.compiler.debug}</debug>\n" +
+                "                    <encoding>" + encoding + "</encoding>\n" +
+                "                    <maxmem>256M</maxmem>\n" +
+                "                    <fork>${compiler.fork}</fork>\n" +
+                "                </configuration>\n" +
+                "            </plugin>\n" +
+                "        </plugins>\n" +
+                "    </build>";
     }
     
     public String finishPOM() {

@@ -15,6 +15,9 @@ import java.io.IOException;
  * @author rpassmore
  */
 public class POM {
+    
+    private ThirdPartyMavenMap map = new ThirdPartyMavenMap();
+    
     public String getPOMStart(String parent, String project) 
     {
         String parentCaps = parent.substring(0,1).toUpperCase() + parent.substring(1);
@@ -56,11 +59,17 @@ public class POM {
                                 "            <artifactId>" + artifactId + "</artifactId>\n" +
                                 "            <version>" + versionNumber + "</version>\n";
         
+        if(map.get(artifactId) != null)
+            pomXML = map.get(artifactId);
+        
         if(isTest)
             pomXML += "            <scope>test</scope>\n";
-                
-        pomXML +=
-            "        </dependency>";
+        
+        if(map.get(artifactId) == null)
+        {
+            pomXML +=
+                "        </dependency>";
+        }
         
         return pomXML;
     }

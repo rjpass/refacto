@@ -5,6 +5,7 @@ projects_base=()
 projects_util=()
 projects_api=()
 projects_protocol=()
+projects_product=()
 
 # usage:	Moves a project to mvn structure, moves code to mvn structure, updates dependencies to mvn structure
 # returns:	Nothing
@@ -46,6 +47,8 @@ moveProject() {
 		projects_api+=("$projectName")
 	elif [ "$newProjectLocation" = "protocol" ]; then
 		projects_protocol+=("$projectName")
+	elif [ "$newProjectLocation" = "product" ]; then
+		projects_product+=("$projectName")
 	fi
 }
 
@@ -143,20 +146,31 @@ if [ "$migrate" = "true" ]; then
 
 	projects_protocol+=("megacol")
 
+	###questions
+	# FeedOutboxes
+	# LoopTestFileDiff
+	# VersaLexWS
+	# AppletIntegrationWebProject
+	# MQLoopback
+	# updnd
+	# PortConnector
+	# 
 
 	echo "\nMigrating projects (base):"
 	moveProject common UtilitiesAndServices base
+	moveProject aspirin ThirdParty base
 	moveProject mailbean UtilitiesAndServices base
 	moveProject VLMetrics UtilitiesAndServices base
 	moveProject XMLLogger UtilitiesAndServices base
 	moveProject vlembeddeddb UtilitiesAndServices base
 	moveProject dnsjava ThirdParty base
-	moveProject aspirin ThirdParty base
 	#moveProject CLJRDeploy UtilitiesAndServices base
 	moveProject vaadin-recaptcha UtilitiesAndServices base
 	moveProject Jcapi ThirdParty base
 	moveProject jcifs-1.3.14 ThirdParty/Jcifs base		#this one is a little weird -- look into it
 	#moveProject jtnef ThirdParty base
+	moveProject confdecrypt UtilitiesAndServices base
+	moveProject base64 UtilitiesAndServices base
 
 	updateModule base ${projects_base[*]}
 
@@ -171,6 +185,7 @@ if [ "$migrate" = "true" ]; then
 	#moveProject j2ssh ThirdParty util 
 	#moveProject HTTPClient ThirdParty util 
 	moveProject hsp-api UtilitiesAndServices util alreadyMaven
+	#moveProject HTTPClient ThirdParty util 				# this has a circ dep with LexiCom	
 
 	updateModule util ${projects_util[*]}
 
@@ -179,6 +194,10 @@ if [ "$migrate" = "true" ]; then
 	moveProject LexAPI UtilitiesAndServices api 
 	moveProject lexbean ProtocolBeans api 
 	moveProject lexhelp UtilitiesAndServices api alreadyMaven
+	moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
+	moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
+	moveProject cleourijms UtilitiesAndServices/URISchemes api 
+	moveProject cleourimsmq UtilitiesAndServices/URISchemes api 
 
 	updateModule api ${projects_api[*]}
 
@@ -204,6 +223,14 @@ if [ "$migrate" = "true" ]; then
 	moveProject wsbean ProtocolBeans protocol
 
 	updateModule protocol ${projects_protocol[*]}
+
+	echo "\nMigrating projects (product):"
+	moveProject LexiCom . product 
+	#moveProject VLTrader . product
+	#moveProject Harmony . product
+	#moveProject VLProxy . product 
+
+	updateModule product ${projects_product[*]}
 fi
 
 if [ "$build" = "true" ]; then

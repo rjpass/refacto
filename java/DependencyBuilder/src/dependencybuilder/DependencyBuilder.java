@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -47,6 +50,7 @@ public class DependencyBuilder {
         }
         
         boolean addedMegacol = false;
+        Set<String> addedDependencies = new HashSet<>();
         
         POM pom = new POM();
         String pomXML = pom.getPOMStart(parent, project);
@@ -72,6 +76,10 @@ public class DependencyBuilder {
                 }
                 
                 String parsedValue = value.substring(sIndex, eIndex);
+                if(addedDependencies.contains(parsedValue))
+                    continue;
+                else
+                    addedDependencies.add(parsedValue);
                 
                 StringTokenizer st = null;
                 if(slashRight)
@@ -136,5 +144,8 @@ public class DependencyBuilder {
         pomXML += pom.finishPOM();
         
         pom.writePOM(newProjectLocation, pomXML);
+        
+        //update this dep for other projects
+        UpdateCleoRemap.update(parent, project);
     }
 }

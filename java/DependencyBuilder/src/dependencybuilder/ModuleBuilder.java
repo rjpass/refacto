@@ -32,7 +32,7 @@ public class ModuleBuilder {
             "    <parent>\n" +
             "        <groupId>com.cleo</groupId>\n" +
             "        <artifactId>parent</artifactId>\n" +
-            "        <version>5.2.1-SNAPSHOT</version>\n" +
+            "        <version>5.2.2-SNAPSHOT</version>\n" +
             "        <relativePath>../parent/pom.xml</relativePath>\n" +
             "    </parent>\n" +
             "\n" +

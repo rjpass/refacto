@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.cleo</groupId>
         <artifactId>efss</artifactId>
-        <version>5.2.1-SNAPSHOT</version>
+        <version>5.2.2-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -20,6 +20,22 @@
 
     <!-- Properties -->
     <properties>
+        <version.cleo>5.2.2-SNAPSHOT</version.cleo>
+
+        <!-- Unknown third-party -->
+        <ajaxswing.version>5.2-SNAPSHOT</ajaxswing.version>
+        <iaik_ssl.version>5.2-SNAPSHOT</iaik_ssl.version>
+        <bouncy-castle.version>5.2-SNAPSHOT</bouncy-castle.version>
+        <jaxp.version>5.2-SNAPSHOT</jaxp.version>
+        <crimson.version>5.2-SNAPSHOT</crimson.version>
+        <sax2.version>5.2-SNAPSHOT</sax2.version>
+        <powermock-easymock-release-full.version>5.2-SNAPSHOT</powermock-easymock-release-full.version>
+        <powermock-mockito-1.5.1-full.version>5.2-SNAPSHOT</powermock-mockito-1.5.1-full.version>
+        <asboot.version>5.2-SNAPSHOT</asboot.version>
+        <aspirin.version>5.2-SNAPSHOT</aspirin.version>
+        <jt400.version>5.2-SNAPSHOT</jt400.version>
+
+        <!-- Known third-party -->
         <karaf.version>3.0.3</karaf.version>
         <osgi-jax-rs-connector.version>4.3</osgi-jax-rs-connector.version>
         <elasticsearch.version>1.6.0_1</elasticsearch.version>
@@ -123,9 +139,11 @@
         <json-schema-validator.version>2.2.6</json-schema-validator.version>
         <msg-simple.version>1.1</msg-simple.version>
         <uri-template.version>0.9</uri-template.version>
-
-
-
+        <servlet-api.version>2.4</servlet-api.version>
+        <mockito-all.version>1.9.5</mockito-all.version>
+        <easymock.version>3.1</easymock.version>
+        <testng.version>6.8</testng.version>
+        <cglib.version>2.2.2</cglib.version>
     </properties>
 
 

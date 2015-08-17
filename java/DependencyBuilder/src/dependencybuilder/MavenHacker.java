@@ -55,12 +55,12 @@ public class MavenHacker {
                         {
                             if(isJunit)
                             {
-                                outFile += "        <version>${version.cleo.junit}</version>\n";
+                                outFile += "        <version>${junit.version}</version>\n";
                                 isJunit = false;
                             }
                             else if(isMockito)
                             {
-                                outFile += "        <version>${version.cleo.mockito-all}</version>\n";
+                                outFile += "        <version>${mockito-all.version}</version>\n";
                                 isMockito = false;
                             }
                             else

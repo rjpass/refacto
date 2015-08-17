@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  *
@@ -16,7 +17,8 @@ import java.io.IOException;
  */
 public class POM {
     
-    private ThirdPartyMavenMap map = new ThirdPartyMavenMap();
+    private Map<String,String> cleoMap = UpdateCleoRemap.projects;
+    private ThirdPartyMavenMap thirdPartyMap = new ThirdPartyMavenMap();
     
     public String getPOMStart(String parent, String project) 
     {
@@ -30,19 +32,14 @@ public class POM {
             "    <parent>\n" +
             "        <groupId>com.cleo." + parent + "</groupId>\n" +
             "        <artifactId>" + parent + "</artifactId>\n" +
-            "        <version>5.2.1-SNAPSHOT</version>\n" +
+            "        <version>5.2.2-SNAPSHOT</version>\n" +
             "    </parent>\n" +
             "\n" +
             "    <groupId>com.cleo." + parent + "</groupId>\n" + 
             "    <artifactId>" + project + "</artifactId>\n" +
             "    <packaging>jar</packaging>\n" +
             "    <name>Cleo :: " + parentCaps + " :: " + project + "</name>\n" +
-            "\n" +
-            "    <properties>\n" +
-            "        <version.cleo>5.2-SNAPSHOT</version.cleo>\n" + 
-            "        <version.cleo.junit>4.10</version.cleo.junit>\n" +
-            "        <version.cleo.mockito-all>1.9.5</version.cleo.mockito-all>\n" +
-            "    </properties>\n\n" +
+            "\n\n" +
             "    <dependencies>";
     }
     
@@ -54,18 +51,37 @@ public class POM {
     
     public String buildDependency(String artifactId, boolean isTest, String groupId, String versionNumber)
     {
+        UpdateCleoRemap.read();
+        cleoMap = UpdateCleoRemap.projects;
+        
         String pomXML =         "\n        <dependency>\n" +
                                 "            <groupId>" + groupId + "</groupId>\n" +
                                 "            <artifactId>" + artifactId + "</artifactId>\n" +
                                 "            <version>" + versionNumber + "</version>\n";
         
-        if(map.get(artifactId) != null)
-            pomXML = map.get(artifactId);
+        if(thirdPartyMap.get(artifactId) != null)
+            pomXML = thirdPartyMap.get(artifactId);
+        else if(cleoMap.get(artifactId) != null)
+        {
+            pomXML = "\n        <dependency>\n" +
+                                "            <groupId>com.cleo." + cleoMap.get(artifactId) + "</groupId>\n" +
+                                "            <artifactId>" + artifactId + "</artifactId>\n" +
+                                "            <version>" + versionNumber + "</version>\n";
+        }
         
         if(isTest)
             pomXML += "            <scope>test</scope>\n";
         
-        if(map.get(artifactId) == null)
+        if(
+                thirdPartyMap.get(artifactId) == null || 
+                artifactId.toLowerCase().equals("powermock-easymock-1.5.1-full") ||
+                artifactId.toLowerCase().equals("junit-4.10") ||
+                artifactId.toLowerCase().equals("powermock-mockito-1.5.1-full") ||
+                artifactId.toLowerCase().equals("mockito-all-1.9.5") ||
+                artifactId.toLowerCase().equals("easymock-3.1") ||
+                artifactId.toLowerCase().equals("testng-6.8") ||
+                artifactId.toLowerCase().equals("cglib-nodep-2.2.2")
+                )
         {
             pomXML +=
                 "        </dependency>";

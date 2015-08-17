@@ -705,8 +705,94 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <version>${uri-template.version}</version>\n" +
 "        </dependency>");
                 
+        put("javax.servlet", "\n        <dependency>\n" +
+"            <groupId>javax.servlet</groupId>\n" +
+"            <artifactId>servlet-api</artifactId>\n" +
+"            <version>${servlet-api.version}</version>\n" +
+"        </dependency>");
+       
+        put("ajaxswing", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>ajaxswing</artifactId>\n" +
+"            <version>${ajaxswing.version}</version>\n" +
+"        </dependency>");
                 
+        put("iaik_ssl", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>iaik_ssl</artifactId>\n" +
+"            <version>${iaik_ssl.version}</version>\n" +
+"        </dependency>");
         
+        put("junit-4.10", "\n        <dependency>\n" +
+"            <groupId>junit</groupId>\n" +
+"            <artifactId>junit</artifactId>\n" +
+"            <version>${junit.version}</version>\n");
+        
+        put("mockito-all-1.9.5", "\n        <dependency>\n" +
+"            <groupId>org.mockito</groupId>\n" +
+"            <artifactId>mockito-all</artifactId>\n" +
+"            <version>${mockito-all.version}</version>\n");
+        
+        put("bcprov", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>bcprov</artifactId>\n" +
+"            <version>${bouncy-castle.version}</version>\n" +
+"        </dependency>");
+        
+        put("jaxp", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>jaxp</artifactId>\n" +
+"            <version>${jaxp.version}</version>\n" +
+"        </dependency>");
+        
+        put("crimson", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>crimson</artifactId>\n" +
+"            <version>${crimson.version}</version>\n" +
+"        </dependency>");
+        
+        put("sax2", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>sax2</artifactId>\n" +
+"            <version>${sax2.version}</version>\n" +
+"        </dependency>");
+        
+        put("powermock-easymock-1.5.1-full", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>powermock-easymock-1.5.1-full</artifactId>\n" +
+"            <version>${powermock-easymock-release-full.version}</version>\n");
+        
+        put("powermock-mockito-1.5.1-full", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>powermock-mockito-1.5.1-full</artifactId>\n" +
+"            <version>${powermock-mockito-1.5.1-full.version}</version>\n");
+        
+        put("easymock-3.1", "\n        <dependency>\n" +
+"            <groupId>org.easymock</groupId>\n" +
+"            <artifactId>easymock</artifactId>\n" +
+"            <version>${easymock.version}</version>\n");
+        
+        put("testng-6.8", "\n        <dependency>\n" +
+"            <groupId>org.testng</groupId>\n" +
+"            <artifactId>testng</artifactId>\n" +
+"            <version>${testng.version}</version>\n");
+        
+        put("asboot", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>asboot</artifactId>\n" +
+"            <version>${asboot.version}</version>\n" +
+"        </dependency>");
+        
+        put("cglib-nodep-2.2.2", "\n        <dependency>\n" +
+"            <groupId>cglib</groupId>\n" +
+"            <artifactId>cglib-nodep</artifactId>\n" +
+"            <version>${cglib.version}</version>\n");
+        
+        put("jt400", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>jt400</artifactId>\n" +
+"            <version>${jt400.version}</version>\n" +
+"        </dependency>");
     }
     
 }

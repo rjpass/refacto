@@ -6,19 +6,13 @@
     <parent>
         <artifactId>protocol</artifactId>
         <groupId>com.cleo.protocol</groupId>
-        <version>5.2.1-SNAPSHOT</version>
+        <version>5.2.2-SNAPSHOT</version>
     </parent>
 
     <groupId>com.cleo.protocol</groupId>
     <artifactId>megacol</artifactId>
     <packaging>jar</packaging>
     <name>Cleo :: Protocol :: Megacol</name>
-
-    <properties>
-        <version.cleo>5.2.1-SNAPSHOT</version.cleo>
-        <version.cleo.junit>4.10</version.cleo.junit>
-        <version.cleo.mockito-all>1.9.5</version.cleo.mockito-all>
-    </properties>
 
     <dependencies>
         <dependency>

@@ -157,11 +157,11 @@ if [ "$migrate" = "true" ]; then
 	# 
 
 	echo "\nMigrating projects (base):"
+	moveProject XMLLogger UtilitiesAndServices base
 	moveProject common UtilitiesAndServices base
 	moveProject aspirin ThirdParty base
-	moveProject mailbean UtilitiesAndServices base
+	#moveProject mailbean UtilitiesAndServices base 	this is where it should go
 	moveProject VLMetrics UtilitiesAndServices base
-	moveProject XMLLogger UtilitiesAndServices base
 	moveProject vlembeddeddb UtilitiesAndServices base
 	moveProject dnsjava ThirdParty base
 	#moveProject CLJRDeploy UtilitiesAndServices base
@@ -183,7 +183,6 @@ if [ "$migrate" = "true" ]; then
 	#moveProject updnd UtilitiesAndServices util 
 	moveProject snmpagent UtilitiesAndServices util 
 	#moveProject j2ssh ThirdParty util 
-	#moveProject HTTPClient ThirdParty util 
 	moveProject hsp-api UtilitiesAndServices util alreadyMaven
 	#moveProject HTTPClient ThirdParty util 				# this has a circ dep with LexiCom	
 
@@ -193,6 +192,7 @@ if [ "$migrate" = "true" ]; then
 	moveProject LexAPI_POJO UtilitiesAndServices api alreadyMaven
 	moveProject LexAPI UtilitiesAndServices api 
 	moveProject lexbean ProtocolBeans api 
+	moveProject mailbean UtilitiesAndServices api
 	moveProject lexhelp UtilitiesAndServices api alreadyMaven
 	moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
 	moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 

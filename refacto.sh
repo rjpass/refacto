@@ -134,8 +134,8 @@ while [ "$1" != "" ]; do
 	shift
 done
 
-echo "Downloading the EFSS repo\n"
 if [ ! -d "../efss-maven" ] || [ "$clear" = "true" ]; then
+	echo "Downloading the EFSS repo\n"
 	rm -rf "../efss-maven"
 	git clone git@github.com:CleoDev/EFSS.git ../efss-maven
 elif [ "$update" == "" ]; then
@@ -159,6 +159,16 @@ if [ "$migrate" = "true" ]; then
 	# updnd
 	# PortConnector
 	# 
+	# Circular Dependencies
+	# ----------------------
+	# SftpServer depends on lexbean
+	# lexbean and LexAPI
+	# mailbean is dependent on lexbean
+	# 
+
+	#remove old reqs and rebuild as projects are added
+	rm cleo.prop 
+	touch cleo.prop
 
 	echo "\nMigrating projects (base):"
 	moveProject XMLLogger UtilitiesAndServices base
@@ -172,7 +182,7 @@ if [ "$migrate" = "true" ]; then
 	moveProject vaadin-recaptcha UtilitiesAndServices base
 	moveProject Jcapi ThirdParty base
 	moveProject jcifs-1.3.14 ThirdParty/Jcifs base		#this one is a little weird -- look into it
-	#moveProject jtnef ThirdParty base
+	moveProject jtnef ThirdParty base
 	moveProject confdecrypt UtilitiesAndServices base
 	moveProject base64 UtilitiesAndServices base
 
@@ -181,11 +191,12 @@ if [ "$migrate" = "true" ]; then
 	echo "\nMigrating projects (util):"
 	moveProject HTTPClient ThirdParty util httpClient				# this has a circ dep with LexiCom	
 	moveProject j2ssh ThirdParty util 
+	moveProject LexAPI_POJO UtilitiesAndServices util alreadyMaven
 	moveProject CertManager UtilitiesAndServices util
 	moveProject WebServer Servers util 
 	moveProject SmtpServer Servers util 
 	moveProject FtpServer Servers util 
-	moveProject SftpServer Servers util 
+	#moveProject SftpServer Servers util 		this is where it should go
 	#moveProject updnd UtilitiesAndServices util 
 	moveProject snmpagent UtilitiesAndServices util 
 	moveProject hsp-api UtilitiesAndServices util alreadyMaven
@@ -193,18 +204,17 @@ if [ "$migrate" = "true" ]; then
 
 	updateModule util ${projects_util[*]}
 
-	# echo "\nMigrating projects (api):"
-	# moveProject LexAPI_POJO UtilitiesAndServices api alreadyMaven
-	# moveProject LexAPI UtilitiesAndServices api 
-	# moveProject lexbean ProtocolBeans api 
-	# moveProject mailbean UtilitiesAndServices api
-	# moveProject lexhelp UtilitiesAndServices api alreadyMaven
-	# moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
-	# moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
-	# moveProject cleourijms UtilitiesAndServices/URISchemes api 
-	# moveProject cleourimsmq UtilitiesAndServices/URISchemes api 
+	echo "\nMigrating projects (api):"
+	#moveProject LexAPI UtilitiesAndServices api 
+	#moveProject lexbean ProtocolBeans api 
+	#moveProject mailbean UtilitiesAndServices api  	this shouldn't go here
+	moveProject lexhelp UtilitiesAndServices api alreadyMaven
+	moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
+	moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
+	moveProject cleourijms UtilitiesAndServices/URISchemes api 
+	moveProject cleourimsmq UtilitiesAndServices/URISchemes api 
 
-	# updateModule api ${projects_api[*]}
+	updateModule api ${projects_api[*]}
 
 	# echo "\nMigrating projects (protocol):"
 	# moveProject as2bean ProtocolBeans protocol
@@ -230,6 +240,7 @@ if [ "$migrate" = "true" ]; then
 	# updateModule protocol ${projects_protocol[*]}
 
 	# echo "\nMigrating projects (product):"
+	# moveProject SftpServer Servers product
 	# moveProject LexiCom . product 
 	#moveProject VLTrader . product
 	#moveProject Harmony . product

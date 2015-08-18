@@ -24,8 +24,7 @@
 
         <!-- Unknown third-party -->
         <ajaxswing.version>5.2-SNAPSHOT</ajaxswing.version>
-        <iaik_ssl.version>5.2-SNAPSHOT</iaik_ssl.version>
-        <iaik_jce.version>5.2-SNAPSHOT</iaik_jce.version>
+        <iaik.version>5.2-SNAPSHOT</iaik.version>
         <bouncy-castle.version>5.2-SNAPSHOT</bouncy-castle.version>
         <jaxp.version>5.2-SNAPSHOT</jaxp.version>
         <crimson.version>5.2-SNAPSHOT</crimson.version>
@@ -39,7 +38,10 @@
         <jsonrpc-1.0.version>5.2-SNAPSHOT</jsonrpc-1.0.version>
         <log4j.version>5.2-SNAPSHOT</log4j.version>
         <xmlParserAPIs.version>5.2-SNAPSHOT</xmlParserAPIs.version>
-        <jce-jdk13-119.version>5.2-SNAPSHOT</jce-jdk13-119.version>
+        <jce-jdk13-119.version>5.2-SNAPSHOT</jce-jdk13-119.version> <!-- bouncy castle -->
+        <gwt-servlet.version>5.2-SNAPSHOT</gwt-servlet.version>
+        <snmp4j-agent.version>5.2-SNAPSHOT</snmp4j-agent.version>
+        <snmp4j.version>5.2-SNAPSHOT</snmp4j.version>
 
         <!-- Known third-party -->
         <karaf.version>3.0.3</karaf.version>

@@ -9,6 +9,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -28,51 +32,48 @@ public class MavenHacker {
         String packageName = args[2];
         String project = args[3];
         
+        Set<String> dependencies = new HashSet<>();
+        
         String outFile = pom.getPOMStart(packageName, project);
+        UpdateCleoRemap.read();
         
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(new File(pomName)));
-            String line = "";
+            String line;
             while((line=br.readLine()) != null) {
                 if(line.trim().startsWith("<dependency>"))
                 {
-                    boolean isJunit = false;
-                    boolean isMockito = false;
+                    String artifactId = "";
                     
-                    outFile += '\n' + line + '\n';
-                    while((line=br.readLine()) != null && !line.trim().startsWith("</dependency>")) {
-                        if(line.trim().startsWith("<groupId>junit"))
-                            isJunit = true;
-                        if(line.trim().startsWith("<groupId>org.mockito"))
-                            isMockito = true;
-                        
-                        if(line.trim().startsWith("<groupId>${project.groupId}"))
-                            outFile += "        <groupId>com.cleo</groupId>\n";
-                        else if(line.trim().startsWith("<version>${") || 
-                                (line.trim().startsWith("<version>") && isJunit) ||
-                                (line.trim().startsWith("<version>") && isMockito))
-                        {
-                            if(isJunit)
-                            {
-                                outFile += "        <version>${junit.version}</version>\n";
-                                isJunit = false;
-                            }
-                            else if(isMockito)
-                            {
-                                outFile += "        <version>${mockito-all.version}</version>\n";
-                                isMockito = false;
-                            }
-                            else
-                                outFile += "        <version>${version.cleo}</version>\n";
-                        }
-                        else
-                            outFile += "        " + line.trim() + '\n';
+                    while((line=br.readLine()) != null && !line.trim().startsWith("</dependency>")) 
+                    {       
+                        if(line.trim().startsWith("<artifactId>"))
+                            artifactId = line.substring(line.indexOf(">")+1, line.lastIndexOf("<")).trim();
                     }
-                    outFile += line + '\n';    //</dependency>
+                    
+                    dependencies.add(artifactId);
                 }
                 else if(line.trim().startsWith("</dependencies>"))
                     break;
+            }
+            
+            for(String artifactId : dependencies)
+            {
+                boolean isTest = false;
+                if(artifactId.equalsIgnoreCase("powermock-easymock-1.5.1-full") ||
+                    artifactId.toLowerCase().equals("junit-4.10") ||
+                    artifactId.toLowerCase().equals("powermock-mockito-1.5.1-full") ||
+                    artifactId.toLowerCase().equals("mockito-all-1.9.5") ||
+                    artifactId.toLowerCase().equals("easymock-3.1") ||
+                    artifactId.toLowerCase().equals("testng-6.8") ||
+                    artifactId.toLowerCase().equals("cglib-nodep-2.2.2")
+                )
+                {
+                    isTest = true;
+                }
+                    
+                outFile += pom.buildDependency(artifactId, isTest);
             }
             
             outFile += pom.finishDependencies();
@@ -85,6 +86,9 @@ public class MavenHacker {
         } finally {
             if(br!=null) try { br.close(); } catch(IOException exx) {}
         }
+        
+        //update this dep for other projects
+        UpdateCleoRemap.update(packageName, project);
     }
     
 }

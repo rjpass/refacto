@@ -720,7 +720,7 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
         put("iaik_ssl", "\n        <dependency>\n" +
 "            <groupId>com.cleo</groupId>\n" +
 "            <artifactId>iaik_ssl</artifactId>\n" +
-"            <version>${iaik_ssl.version}</version>\n" +
+"            <version>${iaik.version}</version>\n" +
 "        </dependency>");
         
         put("junit-4.10", "\n        <dependency>\n" +
@@ -827,7 +827,7 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
         put("iaik_jce", "\n        <dependency>\n" +
 "            <groupId>com.cleo</groupId>\n" +
 "            <artifactId>iaik_jce</artifactId>\n" +
-"            <version>${iaik_jce.version}</version>\n" +
+"            <version>${iaik.version}</version>\n" +
 "        </dependency>");
         
         put("ant", "\n        <dependency>\n" +
@@ -836,6 +836,47 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <version>${ant.version}</version>\n" +
 "        </dependency>");
         
+        put("iaik_cms", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>iaik_cms</artifactId>\n" +
+"            <version>${iaik.version}</version>\n" +
+"        </dependency>");
+        
+        put("bcpg", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>bcpg</artifactId>\n" +
+"            <version>${bouncy-castle.version}</version>\n" +
+"        </dependency>");
+        
+        put("gwt-servlet", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>gwt-servlet</artifactId>\n" +
+"            <version>${gwt-servlet.version}</version>\n" +
+"        </dependency>");
+
+        put("apache-mime4j", "\n        <dependency>\n" +
+"            <groupId>org.apache.james</groupId>\n" +
+"            <artifactId>apache-mime4j</artifactId>\n" +
+"            <version>${apache-mime4j.version}</version>\n" +
+"        </dependency>");
+        
+        put("iaik_javax_crypto", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>iaik_javax_crypto</artifactId>\n" +
+"            <version>${iaik.version}</version>\n" +
+"        </dependency>");
+        
+        put("snmp4j-agent", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>snmp4j-agent</artifactId>\n" +
+"            <version>${snmp4j-agent.version}</version>\n" +
+"        </dependency>");
+        
+        put("snmp4j", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>snmp4j</artifactId>\n" +
+"            <version>${snmp4j.version}</version>\n" +
+"        </dependency>");
     }
     
 }

@@ -10,26 +10,30 @@ projects_product=()
 # usage:	Moves a project to mvn structure, moves code to mvn structure, updates dependencies to mvn structure
 # returns:	Nothing
 moveProject() {
-	local projectName oldProjectLocation newProjectLocation alreadyMaven
+	local projectName oldProjectLocation newProjectLocation special
 	projectName=$1
 	oldProjectLocation=$2
 	newProjectLocation=$3
-	alreadyMaven=$4
+	special=$4
 	projectPath="../efss-maven/$newProjectLocation/$projectName"
 
-	if [ "$alreadyMaven" = "" ]; then
+	if [ "$special" = "" ]; then
 		mkdir -p "$projectPath/src/main/java"
 		mkdir -p "$projectPath/src/test/java"
 		cp -R "../efss-maven/$oldProjectLocation/$projectName/src/" "$projectPath/src/main/java" 2>/dev/null
 		cp -R "../efss-maven/$oldProjectLocation/$projectName/test/" "$projectPath/src/test/java" 2>/dev/null
+	elif [ "$special" = "httpClient" ]; then
+		mkdir -p "$projectPath/src/main/java"
+		mkdir -p "$projectPath/src/test/java"
+		cp -R "../efss-maven/$oldProjectLocation/$projectName/jbproject/" "$projectPath/src/main/java" 2>/dev/null
 	else
 		mkdir -p "$projectPath"
 		cp -R "../efss-maven/$oldProjectLocation/$projectName/src/" "$projectPath/src" 2>/dev/null
 	fi
 
-	rsync -aq --exclude='nbproject/' --exclude='build*.xml' --exclude='src/' --exclude='test/' ../efss-maven/$oldProjectLocation/$projectName/* $projectPath
+	rsync -aq --exclude='nbproject/' --exclude='build*.xml' --exclude='src/' --exclude='test/' --exclude='jbproject/' ../efss-maven/$oldProjectLocation/$projectName/* $projectPath
 	
-	if [ "$alreadyMaven" = "" ]; then
+	if [ "$special" != "alreadyMaven" ]; then
 		echo "    Moving project $projectName"
 		java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder ../efss-maven/$oldProjectLocation/$projectName ../efss-maven/$newProjectLocation/$projectName $newProjectLocation $projectName
 	else
@@ -175,6 +179,8 @@ if [ "$migrate" = "true" ]; then
 	updateModule base ${projects_base[*]}
 
 	echo "\nMigrating projects (util):"
+	moveProject HTTPClient ThirdParty util httpClient				# this has a circ dep with LexiCom	
+	moveProject j2ssh ThirdParty util 
 	moveProject CertManager UtilitiesAndServices util
 	moveProject WebServer Servers util 
 	moveProject SmtpServer Servers util 
@@ -182,50 +188,49 @@ if [ "$migrate" = "true" ]; then
 	moveProject SftpServer Servers util 
 	#moveProject updnd UtilitiesAndServices util 
 	moveProject snmpagent UtilitiesAndServices util 
-	#moveProject j2ssh ThirdParty util 
 	moveProject hsp-api UtilitiesAndServices util alreadyMaven
-	#moveProject HTTPClient ThirdParty util 				# this has a circ dep with LexiCom	
+	
 
 	updateModule util ${projects_util[*]}
 
-	echo "\nMigrating projects (api):"
-	moveProject LexAPI_POJO UtilitiesAndServices api alreadyMaven
-	moveProject LexAPI UtilitiesAndServices api 
-	moveProject lexbean ProtocolBeans api 
-	moveProject mailbean UtilitiesAndServices api
-	moveProject lexhelp UtilitiesAndServices api alreadyMaven
-	moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
-	moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
-	moveProject cleourijms UtilitiesAndServices/URISchemes api 
-	moveProject cleourimsmq UtilitiesAndServices/URISchemes api 
+	# echo "\nMigrating projects (api):"
+	# moveProject LexAPI_POJO UtilitiesAndServices api alreadyMaven
+	# moveProject LexAPI UtilitiesAndServices api 
+	# moveProject lexbean ProtocolBeans api 
+	# moveProject mailbean UtilitiesAndServices api
+	# moveProject lexhelp UtilitiesAndServices api alreadyMaven
+	# moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
+	# moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
+	# moveProject cleourijms UtilitiesAndServices/URISchemes api 
+	# moveProject cleourimsmq UtilitiesAndServices/URISchemes api 
 
-	updateModule api ${projects_api[*]}
+	# updateModule api ${projects_api[*]}
 
-	echo "\nMigrating projects (protocol):"
-	moveProject as2bean ProtocolBeans protocol
-	moveProject dcebmxhttpsbean ProtocolBeans protocol
-	moveProject ebicsbean ProtocolBeans protocol
-	moveProject ebxmlbean ProtocolBeans protocol
-	moveProject faspbean ProtocolBeans protocol
-	moveProject ftpbean ProtocolBeans protocol
-	moveProject ftpsbean ProtocolBeans protocol
-	moveProject hspbean ProtocolBeans protocol alreadyMaven
-	moveProject httpbean ProtocolBeans protocol
-	moveProject httpsbean ProtocolBeans protocol
-	moveProject mllpbean ProtocolBeans protocol
-	moveProject mqbean ProtocolBeans protocol
-	moveProject oftpbean ProtocolBeans protocol
-	moveProject rosettabean ProtocolBeans protocol
-	moveProject smtpbean ProtocolBeans protocol
-	moveProject smtpsbean ProtocolBeans protocol
-	moveProject sshftpbean ProtocolBeans protocol
-	moveProject streembean ProtocolBeans protocol
-	moveProject wsbean ProtocolBeans protocol
+	# echo "\nMigrating projects (protocol):"
+	# moveProject as2bean ProtocolBeans protocol
+	# moveProject dcebmxhttpsbean ProtocolBeans protocol
+	# moveProject ebicsbean ProtocolBeans protocol
+	# moveProject ebxmlbean ProtocolBeans protocol
+	# moveProject faspbean ProtocolBeans protocol
+	# moveProject ftpbean ProtocolBeans protocol
+	# moveProject ftpsbean ProtocolBeans protocol
+	# moveProject hspbean ProtocolBeans protocol alreadyMaven
+	# moveProject httpbean ProtocolBeans protocol
+	# moveProject httpsbean ProtocolBeans protocol
+	# moveProject mllpbean ProtocolBeans protocol
+	# moveProject mqbean ProtocolBeans protocol
+	# moveProject oftpbean ProtocolBeans protocol
+	# moveProject rosettabean ProtocolBeans protocol
+	# moveProject smtpbean ProtocolBeans protocol
+	# moveProject smtpsbean ProtocolBeans protocol
+	# moveProject sshftpbean ProtocolBeans protocol
+	# moveProject streembean ProtocolBeans protocol
+	# moveProject wsbean ProtocolBeans protocol
 
-	updateModule protocol ${projects_protocol[*]}
+	# updateModule protocol ${projects_protocol[*]}
 
-	echo "\nMigrating projects (product):"
-	moveProject LexiCom . product 
+	# echo "\nMigrating projects (product):"
+	# moveProject LexiCom . product 
 	#moveProject VLTrader . product
 	#moveProject Harmony . product
 	#moveProject VLProxy . product 

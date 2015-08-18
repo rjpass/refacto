@@ -25,6 +25,7 @@
         <!-- Unknown third-party -->
         <ajaxswing.version>5.2-SNAPSHOT</ajaxswing.version>
         <iaik_ssl.version>5.2-SNAPSHOT</iaik_ssl.version>
+        <iaik_jce.version>5.2-SNAPSHOT</iaik_jce.version>
         <bouncy-castle.version>5.2-SNAPSHOT</bouncy-castle.version>
         <jaxp.version>5.2-SNAPSHOT</jaxp.version>
         <crimson.version>5.2-SNAPSHOT</crimson.version>
@@ -34,6 +35,11 @@
         <asboot.version>5.2-SNAPSHOT</asboot.version>
         <aspirin.version>5.2-SNAPSHOT</aspirin.version>
         <jt400.version>5.2-SNAPSHOT</jt400.version>
+        <jacocoant.version>5.2-SNAPSHOT</jacocoant.version>
+        <jsonrpc-1.0.version>5.2-SNAPSHOT</jsonrpc-1.0.version>
+        <log4j.version>5.2-SNAPSHOT</log4j.version>
+        <xmlParserAPIs.version>5.2-SNAPSHOT</xmlParserAPIs.version>
+        <jce-jdk13-119.version>5.2-SNAPSHOT</jce-jdk13-119.version>
 
         <!-- Known third-party -->
         <karaf.version>3.0.3</karaf.version>
@@ -144,6 +150,7 @@
         <easymock.version>3.1</easymock.version>
         <testng.version>6.8</testng.version>
         <cglib.version>2.2.2</cglib.version>
+        <ant.version>1.9.6</ant.version>
     </properties>
 
 

@@ -793,6 +793,49 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <artifactId>jt400</artifactId>\n" +
 "            <version>${jt400.version}</version>\n" +
 "        </dependency>");
+        
+        put("jacocoant", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>jacocoant</artifactId>\n" +
+"            <version>${jacocoant.version}</version>\n" +
+"        </dependency>");
+        
+        put("jsonrpc-1.0", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>jsonrpc-1.0</artifactId>\n" +
+"            <version>${jsonrpc-1.0.version}</version>\n" +
+"        </dependency>");
+        
+        put("log4j", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>log4j</artifactId>\n" +
+"            <version>${log4j.version}</version>\n" +
+"        </dependency>");
+        
+        put("xmlParserAPIs", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>xmlParserAPIs</artifactId>\n" +
+"            <version>${xmlParserAPIs.version}</version>\n" +
+"        </dependency>");
+        
+        put("jce-jdk13-119", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>bcpg</artifactId>\n" +
+"            <version>${bouncy-castle.version}</version>\n" +
+"        </dependency>");
+        
+        put("iaik_jce", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>iaik_jce</artifactId>\n" +
+"            <version>${iaik_jce.version}</version>\n" +
+"        </dependency>");
+        
+        put("ant", "\n        <dependency>\n" +
+"            <groupId>org.apache.ant</groupId>\n" +
+"            <artifactId>ant</artifactId>\n" +
+"            <version>${ant.version}</version>\n" +
+"        </dependency>");
+        
     }
     
 }

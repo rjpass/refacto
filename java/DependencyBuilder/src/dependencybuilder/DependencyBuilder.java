@@ -139,6 +139,17 @@ public class DependencyBuilder {
         if(project.toLowerCase().equals("jcapi"))
         {
             pomXML += pom.updateEncoding("ISO-8859-1");
+        } 
+        else if(project.toLowerCase().equals("j2ssh"))
+        {
+            pomXML = pom.getPOMStart(parent, project);
+            pomXML += pom.buildDependency("commons-logging", false);
+            pomXML += pom.buildDependency("xercesImpl", false);
+            pomXML += pom.buildDependency("xmlParserAPIs", false);
+            pomXML += pom.buildDependency("jce-jdk13-119", false);
+            pomXML += pom.buildDependency("ant", false);
+            pomXML += pom.buildDependency("HTTPClient", false);
+            pomXML += pom.finishDependencies();
         }
         
         pomXML += pom.finishPOM();

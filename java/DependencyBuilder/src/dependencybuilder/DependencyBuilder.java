@@ -120,10 +120,11 @@ public class DependencyBuilder {
                             parsedValue.equals("smtpbean") ||
                             parsedValue.equals("wsbean")
                         )
+                        || project.equals("lexbean")
                     )
                 {
                     if(!addedMegacol)
-                        pomXML += pom.buildDependency("megacol", false, "com.cleo.protocol", "5.2.1-SNAPSHOT");
+                        pomXML += pom.buildDependency("megacol", false, "com.cleo.protocol", "5.2.2-SNAPSHOT");
                     addedMegacol = true;
                 }
                 else

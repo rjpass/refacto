@@ -877,6 +877,60 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <artifactId>snmp4j</artifactId>\n" +
 "            <version>${snmp4j.version}</version>\n" +
 "        </dependency>");
+        
+        put("jewt", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>jewt</artifactId>\n" +
+"            <version>${jewt.version}</version>\n" +
+"        </dependency>");
+        
+        put("share", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>share</artifactId>\n" +
+"            <version>${share.version}</version>\n" +
+"        </dependency>");
+        
+        put("oracle_ice", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>oracle_ice</artifactId>\n" +
+"            <version>${oracle_ice.version}</version>\n" +
+"        </dependency>");
+        
+        put("help-share", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>help-share</artifactId>\n" +
+"            <version>${help-share.version}</version>\n" +
+"        </dependency>");
+        
+        put("wcboot", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>wcboot</artifactId>\n" +
+"            <version>${wcboot.version}</version>\n" +
+"        </dependency>");
+        
+        put("wizardpane", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>wizardpane</artifactId>\n" +
+"            <version>${wizardpane.version}</version>\n" +
+"        </dependency>");
+        
+        put("ediframe", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>ediframe</artifactId>\n" +
+"            <version>${ediframe.version}</version>\n" +
+"        </dependency>");
+        
+        put("connector", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>connector</artifactId>\n" +
+"            <version>${connector.version}</version>\n" +
+"        </dependency>");
+        
+        put("com.ibm.mq", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>com.ibm.mq</artifactId>\n" +
+"            <version>${com.ibm.mq.version}</version>\n" +
+"        </dependency>");
     }
     
 }

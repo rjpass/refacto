@@ -26,7 +26,7 @@ moveProject() {
 		mkdir -p "$projectPath/src/main/java"
 		mkdir -p "$projectPath/src/test/java"
 		cp -R "../efss-maven/$oldProjectLocation/$projectName/jbproject/" "$projectPath/src/main/java" 2>/dev/null
-	else
+	else  #this is a maven project already
 		mkdir -p "$projectPath"
 		cp -R "../efss-maven/$oldProjectLocation/$projectName/src/" "$projectPath/src" 2>/dev/null
 	fi
@@ -138,6 +138,10 @@ if [ ! -d "../efss-maven" ] || [ "$clear" = "true" ]; then
 	echo "Downloading the EFSS repo\n"
 	rm -rf "../efss-maven"
 	git clone git@github.com:CleoDev/EFSS.git ../efss-maven
+	cd ../efss-maven
+	#git checkout circular-dependencies
+	git checkout circular-dependencies
+	cd -
 elif [ "$update" == "" ]; then
 	echo "EFSS repo already exists (efss-maven).  Run -c to delete and re-download, or -u to run update on existing EFSS repo"
 	exit 
@@ -148,7 +152,8 @@ if [ "$migrate" = "true" ]; then
 	#find  * \! -name "EFSS" -maxdepth 0 -exec cp -r {} EFSS \;
 	rsync -a --exclude='EFSS/' --exclude='java/' --exclude='refacto.sh' new-structure/* ../efss-maven
 
-	projects_protocol+=("megacol")
+	#projects_protocol+=("megacol")
+	projects_api+=("megacol")
 
 	###questions
 	# FeedOutboxes
@@ -158,12 +163,13 @@ if [ "$migrate" = "true" ]; then
 	# MQLoopback
 	# updnd
 	# PortConnector
+	# snmpagent created a jar called vlsnmpagent
 	# 
 	# Circular Dependencies
 	# ----------------------
 	# SftpServer depends on lexbean
-	# lexbean and LexAPI
-	# mailbean is dependent on lexbean
+	# lexbean and LexAPI --done
+	# mailbean is dependent on lexbean --done
 	# 
 
 	#remove old reqs and rebuild as projects are added
@@ -174,8 +180,9 @@ if [ "$migrate" = "true" ]; then
 	moveProject XMLLogger UtilitiesAndServices base
 	moveProject common UtilitiesAndServices base
 	moveProject aspirin ThirdParty base
-	#moveProject mailbean UtilitiesAndServices base 	this is where it should go
+	#moveProject mailbean UtilitiesAndServices base 	
 	moveProject VLMetrics UtilitiesAndServices base
+	moveProject snmpagent UtilitiesAndServices base 
 	moveProject vlembeddeddb UtilitiesAndServices base
 	moveProject dnsjava ThirdParty base
 	#moveProject CLJRDeploy UtilitiesAndServices base
@@ -189,7 +196,7 @@ if [ "$migrate" = "true" ]; then
 	updateModule base ${projects_base[*]}
 
 	echo "\nMigrating projects (util):"
-	moveProject HTTPClient ThirdParty util httpClient				# this has a circ dep with LexiCom	
+	moveProject HTTPClient ThirdParty util httpClient
 	moveProject j2ssh ThirdParty util 
 	moveProject LexAPI_POJO UtilitiesAndServices util alreadyMaven
 	moveProject CertManager UtilitiesAndServices util
@@ -200,14 +207,13 @@ if [ "$migrate" = "true" ]; then
 	#moveProject updnd UtilitiesAndServices util 
 	moveProject snmpagent UtilitiesAndServices util 
 	moveProject hsp-api UtilitiesAndServices util alreadyMaven
-	
 
 	updateModule util ${projects_util[*]}
 
 	echo "\nMigrating projects (api):"
-	#moveProject LexAPI UtilitiesAndServices api 
-	#moveProject lexbean ProtocolBeans api 
-	#moveProject mailbean UtilitiesAndServices api  	this shouldn't go here
+	#moveProject LexAPI UtilitiesAndServices api    no longer in the repo, stuff added to lexbean
+	moveProject lexbean ProtocolBeans api 
+	moveProject mailbean UtilitiesAndServices api  	#this shouldn't go here
 	moveProject lexhelp UtilitiesAndServices api alreadyMaven
 	moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
 	moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
@@ -216,28 +222,28 @@ if [ "$migrate" = "true" ]; then
 
 	updateModule api ${projects_api[*]}
 
-	# echo "\nMigrating projects (protocol):"
-	# moveProject as2bean ProtocolBeans protocol
-	# moveProject dcebmxhttpsbean ProtocolBeans protocol
-	# moveProject ebicsbean ProtocolBeans protocol
-	# moveProject ebxmlbean ProtocolBeans protocol
-	# moveProject faspbean ProtocolBeans protocol
-	# moveProject ftpbean ProtocolBeans protocol
-	# moveProject ftpsbean ProtocolBeans protocol
-	# moveProject hspbean ProtocolBeans protocol alreadyMaven
-	# moveProject httpbean ProtocolBeans protocol
-	# moveProject httpsbean ProtocolBeans protocol
-	# moveProject mllpbean ProtocolBeans protocol
-	# moveProject mqbean ProtocolBeans protocol
-	# moveProject oftpbean ProtocolBeans protocol
-	# moveProject rosettabean ProtocolBeans protocol
-	# moveProject smtpbean ProtocolBeans protocol
-	# moveProject smtpsbean ProtocolBeans protocol
-	# moveProject sshftpbean ProtocolBeans protocol
-	# moveProject streembean ProtocolBeans protocol
-	# moveProject wsbean ProtocolBeans protocol
+	echo "\nMigrating projects (protocol):"
+	moveProject as2bean ProtocolBeans protocol
+	moveProject dcebmxhttpsbean ProtocolBeans protocol
+	moveProject ebicsbean ProtocolBeans protocol
+	moveProject ebxmlbean ProtocolBeans protocol
+	moveProject faspbean ProtocolBeans protocol
+	moveProject ftpbean ProtocolBeans protocol
+	moveProject ftpsbean ProtocolBeans protocol
+	moveProject hspbean ProtocolBeans protocol alreadyMaven
+	moveProject httpbean ProtocolBeans protocol
+	moveProject httpsbean ProtocolBeans protocol
+	moveProject mllpbean ProtocolBeans protocol
+	moveProject mqbean ProtocolBeans protocol
+	moveProject oftpbean ProtocolBeans protocol
+	moveProject rosettabean ProtocolBeans protocol
+	moveProject smtpbean ProtocolBeans protocol
+	moveProject smtpsbean ProtocolBeans protocol
+	moveProject sshftpbean ProtocolBeans protocol
+	moveProject streembean ProtocolBeans protocol
+	moveProject wsbean ProtocolBeans protocol
 
-	# updateModule protocol ${projects_protocol[*]}
+	updateModule protocol ${projects_protocol[*]}
 
 	# echo "\nMigrating projects (product):"
 	# moveProject SftpServer Servers product

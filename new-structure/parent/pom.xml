@@ -21,27 +21,37 @@
     <!-- Properties -->
     <properties>
         <version.cleo>5.2.2-SNAPSHOT</version.cleo>
+        <unknown-thirdparty.version>5.2-SNAPSHOT</unknown-thirdparty.version>
 
         <!-- Unknown third-party -->
-        <ajaxswing.version>5.2-SNAPSHOT</ajaxswing.version>
-        <iaik.version>5.2-SNAPSHOT</iaik.version>
-        <bouncy-castle.version>5.2-SNAPSHOT</bouncy-castle.version>
-        <jaxp.version>5.2-SNAPSHOT</jaxp.version>
-        <crimson.version>5.2-SNAPSHOT</crimson.version>
-        <sax2.version>5.2-SNAPSHOT</sax2.version>
-        <powermock-easymock-release-full.version>5.2-SNAPSHOT</powermock-easymock-release-full.version>
-        <powermock-mockito-1.5.1-full.version>5.2-SNAPSHOT</powermock-mockito-1.5.1-full.version>
-        <asboot.version>5.2-SNAPSHOT</asboot.version>
-        <aspirin.version>5.2-SNAPSHOT</aspirin.version>
-        <jt400.version>5.2-SNAPSHOT</jt400.version>
-        <jacocoant.version>5.2-SNAPSHOT</jacocoant.version>
-        <jsonrpc-1.0.version>5.2-SNAPSHOT</jsonrpc-1.0.version>
-        <log4j.version>5.2-SNAPSHOT</log4j.version>
-        <xmlParserAPIs.version>5.2-SNAPSHOT</xmlParserAPIs.version>
-        <jce-jdk13-119.version>5.2-SNAPSHOT</jce-jdk13-119.version> <!-- bouncy castle -->
-        <gwt-servlet.version>5.2-SNAPSHOT</gwt-servlet.version>
-        <snmp4j-agent.version>5.2-SNAPSHOT</snmp4j-agent.version>
-        <snmp4j.version>5.2-SNAPSHOT</snmp4j.version>
+        <ajaxswing.version>${unknown-thirdparty.version}</ajaxswing.version>
+        <iaik.version>${unknown-thirdparty.version}</iaik.version>
+        <bouncy-castle.version>${unknown-thirdparty.version}</bouncy-castle.version>
+        <jaxp.version>${unknown-thirdparty.version}</jaxp.version>
+        <crimson.version>${unknown-thirdparty.version}</crimson.version>
+        <sax2.version>${unknown-thirdparty.version}</sax2.version>
+        <powermock-easymock-release-full.version>${unknown-thirdparty.version}</powermock-easymock-release-full.version>
+        <powermock-mockito-1.5.1-full.version>${unknown-thirdparty.version}</powermock-mockito-1.5.1-full.version>
+        <asboot.version>${unknown-thirdparty.version}</asboot.version>
+        <aspirin.version>${unknown-thirdparty.version}</aspirin.version>
+        <jt400.version>${unknown-thirdparty.version}</jt400.version>
+        <jacocoant.version>${unknown-thirdparty.version}</jacocoant.version>
+        <jsonrpc-1.0.version>${unknown-thirdparty.version}</jsonrpc-1.0.version>
+        <log4j.version>${unknown-thirdparty.version}</log4j.version>
+        <xmlParserAPIs.version>${unknown-thirdparty.version}</xmlParserAPIs.version>
+        <jce-jdk13-119.version>${unknown-thirdparty.version}</jce-jdk13-119.version> <!-- bouncy castle -->
+        <gwt-servlet.version>${unknown-thirdparty.version}</gwt-servlet.version>
+        <snmp4j-agent.version>${unknown-thirdparty.version}</snmp4j-agent.version>
+        <snmp4j.version>${unknown-thirdparty.version}</snmp4j.version>
+        <jewt.version>${unknown-thirdparty.version}</jewt.version>
+        <share.version>${unknown-thirdparty.version}</share.version>
+        <oracle_ice.version>${unknown-thirdparty.version}</oracle_ice.version>
+        <help-share.version>${unknown-thirdparty.version}</help-share.version>
+        <wcboot.version>${unknown-thirdparty.version}</wcboot.version>
+        <wizardpane.version>${unknown-thirdparty.version}</wizardpane.version>
+        <ediframe.version>${unknown-thirdparty.version}</ediframe.version>
+        <connector.version>${unknown-thirdparty.version}</connector.version>
+        <com.ibm.mq.version>${unknown-thirdparty.version}</com.ibm.mq.version>
 
         <!-- Known third-party -->
         <karaf.version>3.0.3</karaf.version>

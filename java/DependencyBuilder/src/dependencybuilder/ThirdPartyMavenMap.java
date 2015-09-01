@@ -147,10 +147,10 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <version>${geronimo-annotation_1.0_spec.version}</version>\n" +
 "        </dependency>");
         
-        put("", "\n        <dependency>\n" +
+        put("geronimo-stax-api_1.0_spec", "\n        <dependency>\n" +
 "            <groupId>org.apache.geronimo.specs</groupId>\n" +
 "            <artifactId>geronimo-stax-api_1.0_spec</artifactId>\n" +
-"            <version>${geronimo-stax-api_1.0_spec}</version>\n" +
+"            <version>${geronimo-stax-api_1.0_spec.version}</version>\n" +
 "        </dependency>");
         
         put("h2", "\n        <dependency>\n" +
@@ -990,6 +990,84 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <groupId>com.cleo</groupId>\n" +
 "            <artifactId>aspera-cmdclient</artifactId>\n" +
 "            <version>${aspera-cmdclient.version}</version>\n" +
+"        </dependency>");
+        
+        put("com.ibm.mq.commonservices", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>com.ibm.mq.commonservices</artifactId>\n" +
+"            <version>${com.ibm.mq.commonservices.version}</version>\n" +
+"        </dependency>");
+        
+        put("com.ibm.mq.jmqi", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>com.ibm.mq.jmqi</artifactId>\n" +
+"            <version>${com.ibm.mq.jmqi.version}</version>\n" +
+"        </dependency>");
+        
+        put("com.ibm.mq.pcf", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>com.ibm.mq.pcf</artifactId>\n" +
+"            <version>${com.ibm.mq.pcf.version}</version>\n" +
+"        </dependency>");
+        
+        put("com.ibm.mq.headers", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>com.ibm.mq.headers</artifactId>\n" +
+"            <version>${com.ibm.mq.headers.version}</version>\n" +
+"        </dependency>");
+        
+        put("swing-layout", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>swing-layout</artifactId>\n" +
+"            <version>${swing-layout.version}</version>\n" +
+"        </dependency>");
+        
+        put("XmlSchema", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>XmlSchema</artifactId>\n" +
+"            <version>${XmlSchema.version}</version>\n" +
+"        </dependency>");
+        
+        put("xmltooling", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>xmltooling</artifactId>\n" +
+"            <version>${xmltooling.version}</version>\n" +
+"        </dependency>");
+        
+        put("rampart-core", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>rampart-core</artifactId>\n" +
+"            <version>${rampart-core.version}</version>\n" +
+"        </dependency>");
+        
+        put("wstx-asl", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>wstx-asl</artifactId>\n" +
+"            <version>${wstx-asl.version}</version>\n" +
+"        </dependency>");
+        
+        put("rampart-policy", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>rampart-policy</artifactId>\n" +
+"            <version>${rampart-policy.version}</version>\n" +
+"        </dependency>");
+        
+        put("rampart-trust", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>rampart-trust</artifactId>\n" +
+"            <version>${rampart-trust.version}</version>\n" +
+"        </dependency>");
+        
+        put("velocity", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>velocity</artifactId>\n" +
+"            <version>${velocity.version}</version>\n" +
+"        </dependency>");
+        
+        put("openws", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>openws</artifactId>\n" +
+"            <version>${openws.version}</version>\n" +
 "        </dependency>");
     }
     

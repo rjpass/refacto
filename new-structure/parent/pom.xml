@@ -61,6 +61,19 @@
         <slf4j.version>${unknown-thirdparty.version}</slf4j.version>
         <aspera-faspmanager.version>${unknown-thirdparty.version}</aspera-faspmanager.version>
         <aspera-cmdclient.version>${unknown-thirdparty.version}</aspera-cmdclient.version>
+        <com.ibm.mq.commonservices.version>${unknown-thirdparty.version}</com.ibm.mq.commonservices.version>
+        <com.ibm.mq.jmqi.version>${unknown-thirdparty.version}</com.ibm.mq.jmqi.version>
+        <com.ibm.mq.pcf.version>${unknown-thirdparty.version}</com.ibm.mq.pcf.version>
+        <com.ibm.mq.headers.version>${unknown-thirdparty.version}</com.ibm.mq.headers.version>
+        <swing-layout.version>${unknown-thirdparty.version}</swing-layout.version>
+        <XmlSchema.version>${unknown-thirdparty.version}</XmlSchema.version>
+        <xmltooling.version>${unknown-thirdparty.version}</xmltooling.version>
+        <rampart-core.version>${unknown-thirdparty.version}</rampart-core.version>
+        <wstx-asl.version>${unknown-thirdparty.version}</wstx-asl.version>
+        <rampart-policy.version>${unknown-thirdparty.version}</rampart-policy.version>
+        <rampart-trust.version>${unknown-thirdparty.version}</rampart-trust.version>
+        <velocity.version>${unknown-thirdparty.version}</velocity.version>
+        <openws.version>${unknown-thirdparty.version}</openws.version>
 
         <!-- Known third-party -->
         <karaf.version>3.0.3</karaf.version>

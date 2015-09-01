@@ -5,14 +5,9 @@
  */
 package dependencybuilder;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -87,7 +82,6 @@ public class DependencyBuilder {
                 else
                     st = new StringTokenizer(value, "\\");
                 
-                int i=0;
                 boolean isTest = false;
                 while(st.hasMoreTokens())
                 {
@@ -99,12 +93,10 @@ public class DependencyBuilder {
                         isTest = true;
                         break;
                     }
-                    
-                    ++i;
                 }
                 
                 //reconfigure the protocol beans with megacol to support builds
-                if  ( parent.equals("protocol") && 
+                if  ( (parent.equals("protocol") || project.equals("lexbean")) && 
                         (
                             parsedValue.equals("lexbean") ||
                             parsedValue.equals("as2bean") ||
@@ -118,13 +110,15 @@ public class DependencyBuilder {
                             parsedValue.equals("oftpbean") ||
                             parsedValue.equals("rosettabean") ||
                             parsedValue.equals("smtpbean") ||
-                            parsedValue.equals("wsbean")
-                        )
-                        || project.equals("lexbean")
+                            parsedValue.equals("wsbean") ||
+                            parsedValue.equals("webserver") ||
+                            parsedValue.equals("mailbean") ||
+                            parsedValue.equals("lexhelp")
+                        )   
                     )
                 {
                     if(!addedMegacol)
-                        pomXML += pom.buildDependency("megacol", false, "com.cleo.protocol", "5.2.2-SNAPSHOT");
+                        pomXML += pom.buildDependency("megacol", false, "com.cleo.api", "5.2.2-SNAPSHOT");
                     addedMegacol = true;
                 }
                 else

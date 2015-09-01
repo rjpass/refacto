@@ -17,6 +17,10 @@ moveProject() {
 	special=$4
 	projectPath="../efss-maven/$newProjectLocation/$projectName"
 
+	if [ "$projectName" = "snmpagent" ]; then
+		projectPath="../efss-maven/$newProjectLocation/vlsnmpagent"
+	fi 
+
 	if [ "$special" = "" ]; then
 		mkdir -p "$projectPath/src/main/java"
 		mkdir -p "$projectPath/src/test/java"
@@ -35,11 +39,19 @@ moveProject() {
 	
 	if [ "$special" != "alreadyMaven" ]; then
 		echo "    Moving project $projectName"
-		java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder ../efss-maven/$oldProjectLocation/$projectName ../efss-maven/$newProjectLocation/$projectName $newProjectLocation $projectName
+		if [ "$projectName" = "snmpagent" ]; then
+			java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder ../efss-maven/$oldProjectLocation/$projectName $projectPath $newProjectLocation "vlsnmpagent"
+		else
+			java -cp java/DependencyBuilder/build/classes/ dependencybuilder.DependencyBuilder ../efss-maven/$oldProjectLocation/$projectName $projectPath $newProjectLocation $projectName
+		fi
 	else
 		echo "    Moving project $projectName (already Mavenized)"
 		java -cp java/DependencyBuilder/build/classes/ dependencybuilder.MavenHacker ../efss-maven/$newProjectLocation/$projectName ../efss-maven/$oldProjectLocation/$projectName/pom.xml $newProjectLocation $projectName
 	fi
+
+	if [ "$projectName" = "snmpagent" ]; then
+		projectName="vlsnmpagent"
+	fi 
 
 	projectsLocation+=("$newProjectLocation/$projectName")
 	
@@ -215,10 +227,10 @@ if [ "$migrate" = "true" ]; then
 	moveProject lexbean ProtocolBeans api 
 	moveProject mailbean UtilitiesAndServices api  	#this shouldn't go here
 	moveProject lexhelp UtilitiesAndServices api alreadyMaven
-	moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
-	moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
-	moveProject cleourijms UtilitiesAndServices/URISchemes api 
-	moveProject cleourimsmq UtilitiesAndServices/URISchemes api 
+	# moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
+	# moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
+	# moveProject cleourijms UtilitiesAndServices/URISchemes api 
+	# moveProject cleourimsmq UtilitiesAndServices/URISchemes api 
 
 	updateModule api ${projects_api[*]}
 
@@ -230,9 +242,9 @@ if [ "$migrate" = "true" ]; then
 	moveProject faspbean ProtocolBeans protocol
 	moveProject ftpbean ProtocolBeans protocol
 	moveProject ftpsbean ProtocolBeans protocol
-	moveProject hspbean ProtocolBeans protocol alreadyMaven
 	moveProject httpbean ProtocolBeans protocol
 	moveProject httpsbean ProtocolBeans protocol
+	moveProject hspbean ProtocolBeans protocol alreadyMaven
 	moveProject mllpbean ProtocolBeans protocol
 	moveProject mqbean ProtocolBeans protocol
 	moveProject oftpbean ProtocolBeans protocol
@@ -245,12 +257,16 @@ if [ "$migrate" = "true" ]; then
 
 	updateModule protocol ${projects_protocol[*]}
 
-	# echo "\nMigrating projects (product):"
-	# moveProject SftpServer Servers product
-	# moveProject LexiCom . product 
-	#moveProject VLTrader . product
-	#moveProject Harmony . product
-	#moveProject VLProxy . product 
+	echo "\nMigrating projects (product):"
+	moveProject SftpServer Servers product
+	moveProject LexiCom . product 
+	moveProject VLTrader . product
+	moveProject Harmony . product
+	moveProject VLProxy . product 
+	moveProject cleouribitspeed UtilitiesAndServices/URISchemes product 
+	moveProject cleourivlpipe UtilitiesAndServices/URISchemes product 
+	moveProject cleourijms UtilitiesAndServices/URISchemes product 
+	moveProject cleourimsmq UtilitiesAndServices/URISchemes product
 
 	updateModule product ${projects_product[*]}
 fi

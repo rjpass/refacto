@@ -931,6 +931,66 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <artifactId>com.ibm.mq</artifactId>\n" +
 "            <version>${com.ibm.mq.version}</version>\n" +
 "        </dependency>");
+        
+        put("webcream", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>webcream</artifactId>\n" +
+"            <version>${webcream.version}</version>\n" +
+"        </dependency>");
+        
+        put("jcifs", "\n        <dependency>\n" +
+"            <groupId>com.cleo.base</groupId>\n" +
+"            <artifactId>jcifs-1.3.14</artifactId>\n" +
+"            <version>${version.cleo}</version>\n" +
+"        </dependency>");
+        
+        put("js", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>js</artifactId>\n" +
+"            <version>${js.version}</version>\n" +
+"        </dependency>");
+        
+        put("sfc", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>sfc</artifactId>\n" +
+"            <version>${sfc.version}</version>\n" +
+"        </dependency>");
+        
+        put("ohj", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>ohj</artifactId>\n" +
+"            <version>${ohj.version}</version>\n" +
+"        </dependency>");
+        
+        put("lexhelp-javahelp", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>lexhelp-javahelp</artifactId>\n" +
+"            <version>${lexhelp-javahelp.version}</version>\n" +
+"        </dependency>");
+        
+        put("slf4j-api", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>slf4j-api</artifactId>\n" +
+"            <version>${slf4j-api.version}</version>\n" +
+"        </dependency>");
+        
+        put("slf4j", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>slf4j</artifactId>\n" +
+"            <version>${slf4j.version}</version>\n" +
+"        </dependency>");
+        
+        put("aspera-faspmanager", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>aspera-faspmanager</artifactId>\n" +
+"            <version>${aspera-faspmanager.version}</version>\n" +
+"        </dependency>");
+        
+        put("aspera-cmdclient", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>aspera-cmdclient</artifactId>\n" +
+"            <version>${aspera-cmdclient.version}</version>\n" +
+"        </dependency>");
     }
     
 }

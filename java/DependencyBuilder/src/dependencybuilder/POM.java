@@ -39,7 +39,7 @@ public class POM {
             "    <artifactId>" + project + "</artifactId>\n" +
             "    <packaging>jar</packaging>\n" +
             "    <name>Cleo :: " + parentCaps + " :: " + project + "</name>\n" +
-            "\n\n" +
+            "\n" +
             "    <dependencies>";
     }
     

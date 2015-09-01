@@ -52,6 +52,15 @@
         <ediframe.version>${unknown-thirdparty.version}</ediframe.version>
         <connector.version>${unknown-thirdparty.version}</connector.version>
         <com.ibm.mq.version>${unknown-thirdparty.version}</com.ibm.mq.version>
+        <webcream.version>${unknown-thirdparty.version}</webcream.version>
+        <js.version>${unknown-thirdparty.version}</js.version>
+        <sfc.version>${unknown-thirdparty.version}</sfc.version>
+        <ohj.version>${unknown-thirdparty.version}</ohj.version>
+        <lexhelp-javahelp.version>${unknown-thirdparty.version}</lexhelp-javahelp.version>
+        <slf4j-api.version>${unknown-thirdparty.version}</slf4j-api.version>
+        <slf4j.version>${unknown-thirdparty.version}</slf4j.version>
+        <aspera-faspmanager.version>${unknown-thirdparty.version}</aspera-faspmanager.version>
+        <aspera-cmdclient.version>${unknown-thirdparty.version}</aspera-cmdclient.version>
 
         <!-- Known third-party -->
         <karaf.version>3.0.3</karaf.version>

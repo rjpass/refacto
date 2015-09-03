@@ -132,6 +132,8 @@ build=""
 #diff the jars after conversion
 dif=""
 
+mvnStatus=0
+
 while [ "$1" != "" ]; do 
 	case $1 in
 		-c | --clear )		clear="true"
@@ -156,10 +158,7 @@ if [ ! -d "../efss-maven" ] || [ "$clear" = "true" ]; then
 	#git checkout circular-dependencies
 	git checkout circular-dependencies
 	cd -
-elif [ "$update" == "" ]; then
-	echo "EFSS repo already exists (efss-maven).  Run -c to delete and re-download, or -u to run update on existing EFSS repo"
-	exit 
-fi
+fi 
 
 if [ "$migrate" = "true" ]; then	
 	echo "\nMigrating new project structure into EFSS (efss-maven) repo\n"
@@ -304,12 +303,41 @@ if [ "$dif" = "true" ] && [ $mvnStatus = 0 ]; then
 	cd ~/code/refacto
 	for i in "${projects_base[@]}"
 	do
-		printf "Diffing $i... "
 		result=$(doDiff base $i)
 		if [ "$result" != "0" ]; then
-			printf "not the same!  ***********\n"
-		else
-			printf "validated\n"
+			printf "$i... not the same!\n"
+		fi
+	done
+
+	for i in "${projects_util[@]}"
+	do
+		result=$(doDiff util $i)
+		if [ "$result" != "0" ]; then
+			printf "$i... not the same!\n"
+		fi
+	done
+
+	for i in "${projects_api[@]}"
+	do
+		result=$(doDiff api $i)
+		if [ "$result" != "0" ]; then
+			printf "$i... not the same!\n"
+		fi
+	done
+
+	for i in "${projects_protocol[@]}"
+	do
+		result=$(doDiff protocol $i)
+		if [ "$result" != "0" ]; then
+			printf "$i... not the same!\n"
+		fi
+	done
+
+	for i in "${projects_product[@]}"
+	do
+		result=$(doDiff product $i)
+		if [ "$result" != "0" ]; then
+			printf "$i... not the same!\n"
 		fi
 	done
 fi

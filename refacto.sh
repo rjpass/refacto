@@ -64,7 +64,9 @@ moveProject() {
 	elif [ "$newProjectLocation" = "protocol" ]; then
 		projects_protocol+=("$projectName")
 	elif [ "$newProjectLocation" = "product" ]; then
-		projects_product+=("$projectName")
+		if [ "$projectName" != "TestServer" ]; then
+			projects_product+=("$projectName")
+		fi
 	fi
 }
 
@@ -204,7 +206,12 @@ if [ "$migrate" = "true" ]; then
 	moveProject jtnef ThirdParty base
 	moveProject confdecrypt UtilitiesAndServices base
 	moveProject base64 UtilitiesAndServices base
-
+	moveProject SecureShare_POJO server base alreadyMaven
+	moveProject SecureShare_API server base alreadyMaven
+	moveProject SecureShare_NoSQL server base alreadyMaven
+	moveProject SecureShare_Data server base alreadyMaven
+	moveProject DocumentSearchDBClient UtilitiesAndServices base alreadyMaven
+	
 	updateModule base ${projects_base[*]}
 
 	echo "\nMigrating projects (util):"
@@ -219,14 +226,21 @@ if [ "$migrate" = "true" ]; then
 	#moveProject updnd UtilitiesAndServices util 
 	moveProject snmpagent UtilitiesAndServices util 
 	moveProject hsp-api UtilitiesAndServices util alreadyMaven
+	moveProject SecureShare_m9_API server util alreadyMaven
+	moveProject SecureShare_Util server util alreadyMaven
+	moveProject SecureShare_Builders server util alreadyMaven
 
 	updateModule util ${projects_util[*]}
 
 	echo "\nMigrating projects (api):"
 	#moveProject LexAPI UtilitiesAndServices api    no longer in the repo, stuff added to lexbean
 	moveProject lexbean ProtocolBeans api 
+	moveProject VLOSGIMgr UtilitiesAndServices api alreadyMaven
 	moveProject mailbean UtilitiesAndServices api  	#this shouldn't go here
 	moveProject lexhelp UtilitiesAndServices api alreadyMaven
+	moveProject SecureShare_WebServices server api alreadyMaven
+	moveProject SecureShare_MessageMigrator server api alreadyMaven
+	
 	# moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
 	# moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
 	# moveProject cleourijms UtilitiesAndServices/URISchemes api 
@@ -259,6 +273,7 @@ if [ "$migrate" = "true" ]; then
 
 	echo "\nMigrating projects (product):"
 	moveProject SftpServer Servers product
+	moveProject TestServer server product alreadyMaven
 	moveProject LexiCom . product 
 	moveProject VLTrader . product
 	moveProject Harmony . product

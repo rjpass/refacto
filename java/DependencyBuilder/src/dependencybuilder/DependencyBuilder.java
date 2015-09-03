@@ -50,6 +50,12 @@ public class DependencyBuilder {
         POM pom = new POM();
         String pomXML = pom.getPOMStart(parent, project);
         
+        if(project.equalsIgnoreCase("lexicom"))
+        {
+            addedDependencies.add("javax.servlet");
+            pomXML += pom.buildDependency("javax.servlet", false);
+        }
+        
         for(Object key : buildProp.keySet())
         {
             String keyString = (String)key;
@@ -71,6 +77,16 @@ public class DependencyBuilder {
                 }
                 
                 String parsedValue = value.substring(sIndex, eIndex);
+                
+                if(parsedValue.equalsIgnoreCase("ftp"))
+                    parsedValue = "ftpbean";
+                else if(parsedValue.equalsIgnoreCase("ftps"))
+                    parsedValue = "ftpsbean";
+                else if(parsedValue.equalsIgnoreCase("sftpserver"))
+                    parsedValue = "SftpServer";
+                else if(parsedValue.equalsIgnoreCase("webserver"))
+                    parsedValue = "WebServer";
+                
                 if(addedDependencies.contains(parsedValue))
                     continue;
                 else
@@ -102,8 +118,8 @@ public class DependencyBuilder {
                             parsedValue.equals("as2bean") ||
                             parsedValue.equals("ebicsbean") ||
                             parsedValue.equals("ebxmlbean") ||
-                            parsedValue.equals("ftp") ||
-                            parsedValue.equals("ftps") ||
+                            parsedValue.equals("ftpbean") ||
+                            parsedValue.equals("ftpsbean") ||
                             parsedValue.equals("httpbean") ||
                             parsedValue.equals("httpsbean") ||
                             parsedValue.equals("mqbean") ||

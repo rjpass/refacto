@@ -625,6 +625,7 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <groupId>org.mockito</groupId>\n" +
 "            <artifactId>mockito-all</artifactId>\n" +
 "            <version>${mockito-all.version}</version>\n" +
+"            <scope>test</scope>\n" + 
 "        </dependency>");
         
         put("winzipaes", "\n        <dependency>\n" +
@@ -708,7 +709,7 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
         put("javax.servlet", "\n        <dependency>\n" +
 "            <groupId>javax.servlet</groupId>\n" +
 "            <artifactId>servlet-api</artifactId>\n" +
-"            <version>${servlet-api.version}</version>\n" +
+"            <version>${javax.servlet.version}</version>\n" +
 "        </dependency>");
        
         put("ajaxswing", "\n        <dependency>\n" +
@@ -1068,6 +1069,118 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <groupId>com.cleo</groupId>\n" +
 "            <artifactId>openws</artifactId>\n" +
 "            <version>${openws.version}</version>\n" +
+"        </dependency>");
+        
+        put("assertj-core", "\n        <dependency>\n" +
+"            <groupId>org.assertj</groupId>\n" +
+"            <artifactId>assertj-core</artifactId>\n" +
+"            <version>${assertj-core.version}</version>\n" +
+"            <scope>test</scope>\n" + 
+"        </dependency>");
+        
+        put("jackson-databind", "\n        <dependency>\n" +
+"            <groupId>com.fasterxml.jackson.core</groupId>\n" +
+"            <artifactId>jackson-databind</artifactId>\n" +
+"            <version>${jackson-databind.version}</version>\n" +
+"        </dependency>");
+        
+        put("javax.servlet-api", "\n        <dependency>\n" +
+"            <groupId>javax.servlet</groupId>\n" +
+"            <artifactId>javax.servlet-api</artifactId>\n" +
+"            <version>${javax.servlet-api.version}</version>\n" +
+"        </dependency>");
+        
+        put("servlet-api", "\n        <dependency>\n" +
+"            <groupId>javax.servlet</groupId>\n" +
+"            <artifactId>servlet-api</artifactId>\n" +
+"            <version>${servlet-api.version}</version>\n" +
+"        </dependency>");
+        
+        put("servlet-api-2.5", "\n        <dependency>\n" +
+"            <groupId>javax.servlet</groupId>\n" +
+"            <artifactId>servlet-api</artifactId>\n" +
+"            <version>${servlet-api-2.5.version}</version>\n" +
+"        </dependency>");
+        
+        put("jersey-client", "\n        <dependency>\n" +
+"            <groupId>org.glassfish.jersey.core</groupId>\n" +
+"            <artifactId>jersey-client</artifactId>\n" +
+"            <version>${jersey-client.version}</version>\n" +
+"        </dependency>");
+        
+        put("jta", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>jta</artifactId>\n" +
+"            <version>${jta.version}</version>\n" +
+"        </dependency>");
+        
+        put("slf4j-simple", "\n        <dependency>\n" +
+"            <groupId>org.slf4j</groupId>\n" +
+"            <artifactId>slf4j-simple</artifactId>\n" +
+"            <version>${slf4j-simple.version}</version>\n" +
+"        </dependency>");
+        
+        put("jersey-test-framework-core", "\n        <dependency>\n" +
+"            <groupId>org.glassfish.jersey.test-framework</groupId>\n" +
+"            <artifactId>jersey-test-framework-core</artifactId>\n" +
+"            <version>${jersey-test-framework-core.version}</version>\n" +
+"            <scope>test</scope>\n" +
+"        </dependency>");
+        
+        put("jersey-test-framework-provider-inmemory", "\n        <dependency>\n" +
+"            <groupId>org.glassfish.jersey.test-framework.providers</groupId>\n" +
+"            <artifactId>jersey-test-framework-provider-inmemory</artifactId>\n" +
+"            <version>${jersey-test-framework-provider-inmemory.version}</version>\n" +
+"            <scope>test</scope>\n" +
+"        </dependency>");
+        
+        put("testng", "\n        <dependency>\n" +
+"            <groupId>org.testng</groupId>\n" +
+"            <artifactId>testng</artifactId>\n" +
+"            <version>${testng.version}</version>\n" +
+"            <scope>test</scope>\n" +
+"        </dependency>");
+        
+        put("java-diff", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>java-diff</artifactId>\n" +
+"            <version>${java-diff.version}</version>\n" +
+"        </dependency>");
+        
+        put("jcommon", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>jcommon</artifactId>\n" +
+"            <version>${jcommon.version}</version>\n" +
+"        </dependency>");
+        
+        put("JRESServlets", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>JRESServlets</artifactId>\n" +
+"            <version>${JRESServlets.version}</version>\n" +
+"        </dependency>");
+        
+        put("AppletIntegration", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>AppletIntegration</artifactId>\n" +
+"            <version>${AppletIntegration.version}</version>\n" +
+"        </dependency>");
+        
+        put("JREngine", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>JREngine</artifactId>\n" +
+"            <version>${JREngine.version}</version>\n" +
+"        </dependency>");
+        
+        put("elasticsearch", "\n        <dependency>\n" +
+"            <groupId>org.elasticsearch</groupId>\n" +
+"            <artifactId>elasticsearch</artifactId>\n" +
+"            <version>${elasticsearch.version}</version>\n" +
+"        </dependency>");
+        
+        put("jfreechart-1.0.9", "\n        <dependency>\n" +
+"            <groupId>jfree</groupId>\n" +
+"            <artifactId>jfreechart</artifactId>\n" +
+"            <version>${jfreechart.version}</version>\n" +
 "        </dependency>");
     }
     

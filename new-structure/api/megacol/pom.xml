@@ -140,11 +140,6 @@
             <version>${version.cleo}</version>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
-        </dependency>
-        <dependency>
             <groupId>xalan</groupId>
             <artifactId>xalan</artifactId>
             <version>${xalan.version}</version>
@@ -178,11 +173,6 @@
             <groupId>com.cleo.base</groupId>
             <artifactId>jcifs-1.3.14</artifactId>
             <version>${version.cleo}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cleo.util</groupId>
@@ -416,11 +406,6 @@
             <version>${iaik.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.cleo.util</groupId>
             <artifactId>CertManager</artifactId>
             <version>${version.cleo}</version>
@@ -479,11 +464,6 @@
             <groupId>com.cleo</groupId>
             <artifactId>iaik_cms</artifactId>
             <version>${iaik.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cleo.util</groupId>
@@ -949,6 +929,14 @@
         </dependency>
     </dependencies>
 
+<!--
+  lexbean
+  httpbean
+  httpsbean
+  ftpbean
+  ftpsbean
+  as2bean
+-->
     <build>
         <plugins>
             <plugin>

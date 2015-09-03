@@ -113,6 +113,79 @@ public class POM {
                 "    </build>";
     }
     
+    public String addNoSqlDep() {
+        return "\n        <dependency>\n" +
+"            <groupId>com.cleo.base</groupId>\n" +
+"            <artifactId>SecureShare_NoSQL</artifactId>\n" +
+"            <version>${version.cleo}</version>\n" +
+"            <exclusions>\n" +
+"                <exclusion>\n" +
+"                    <groupId>com.cleo</groupId>\n" +
+"                    <artifactId>SecureShare_Util</artifactId>\n" +
+"                </exclusion>\n" +
+"            </exclusions>\n" +
+"        </dependency>";
+    }
+    
+    public String addPojo() {
+        return "\n        <dependency>\n" +
+"            <groupId>Cleo</groupId>\n" +
+"            <artifactId>SecureShare_POJO</artifactId>\n" +
+"            <version>${secureshare.old.version}</version>\n" +
+"        </dependency>";
+    }
+    
+    public String addApi() {
+        return "\n        <dependency>\n" +
+"            <groupId>Cleo</groupId>\n" +
+"            <artifactId>SecureShare_API</artifactId>\n" +
+"            <version>${secureshare.old.version}</version>\n" +
+"        </dependency>";
+    }
+    
+    public String addM9() {
+        return "\n        <dependency>\n" +
+"            <groupId>Cleo</groupId>\n" +
+"            <artifactId>SecureShare_m9_API</artifactId>\n" +
+"            <version>${secureshare.old.version}</version>\n" +
+"        </dependency>";
+    }
+    
+    public String addUtil() {
+        return "\n        <dependency>\n" +
+"            <groupId>Cleo</groupId>\n" +
+"            <artifactId>SecureShare_Util</artifactId>\n" +
+"            <version>${secureshare.old.version}</version>\n" +
+"        </dependency>";
+    }
+    
+    public String addShadePlugin() {
+        return "\n<build>\n" +
+"        <plugins>\n" +
+"            <plugin>\n" +
+"                <groupId>org.apache.maven.plugins</groupId>\n" +
+"                <artifactId>maven-shade-plugin</artifactId>\n" +
+"                <version>${maven.shade.version}</version>\n" +
+"                <executions>\n" +
+"                    <execution>\n" +
+"                        <phase>package</phase>\n" +
+"                        <goals>\n" +
+"                            <goal>shade</goal>\n" +
+"                        </goals>\n" +
+"                        <configuration>\n" +
+"                            <transformers>\n" +
+"                                <transformer implementation=\"org.apache.maven.plugins.shade.resource.ManifestResourceTransformer\">\n" +
+"                                    <mainClass>com.cleo.secureshare.migration.MigratorMain</mainClass>\n" +
+"                                </transformer>\n" +
+"                            </transformers>\n" +
+"                        </configuration>\n" +
+"                    </execution>\n" +
+"                </executions>\n" +
+"            </plugin>\n" +
+"        </plugins>\n" +
+"    </build>";
+    }
+    
     public String finishPOM() {
         return "\n</project>";
     }

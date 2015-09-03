@@ -48,9 +48,17 @@ public class MavenHacker {
                     
                     while((line=br.readLine()) != null && !line.trim().startsWith("</dependency>")) 
                     {       
-                        if(line.trim().startsWith("<artifactId>"))
+                        if(artifactId.equals("") && line.trim().startsWith("<artifactId>"))
                             artifactId = line.substring(line.indexOf(">")+1, line.lastIndexOf("<")).trim();
                     }
+                    
+                    if(artifactId.equals(("webserver")))
+                        artifactId = "WebServer";
+                    
+                    if(project.equalsIgnoreCase("secureshare_m9_API") && artifactId.equalsIgnoreCase("servlet-api"))
+                        artifactId = "servlet-api-2.5";
+                    else if(project.equalsIgnoreCase("hspbean") && artifactId.equalsIgnoreCase("javax.servlet"))
+                        artifactId = "servlet-api";
                     
                     dependencies.add(artifactId);
                 }
@@ -73,10 +81,34 @@ public class MavenHacker {
                     isTest = true;
                 }
                     
-                outFile += pom.buildDependency(artifactId, isTest);
+                if(project.equalsIgnoreCase("SecureShare_MessageMigrator"))
+                {
+                    if(artifactId.equalsIgnoreCase("SecureShare_NoSQL"))
+                        outFile += pom.addNoSqlDep();
+                    else if(artifactId.equalsIgnoreCase("SecureShare_POJO"))
+                        outFile += pom.addPojo();
+                    else if(artifactId.equalsIgnoreCase("SecureShare_API"))
+                        outFile += pom.addApi();
+                    else if(artifactId.equalsIgnoreCase("SecureShare_m9_API"))
+                        outFile += pom.addM9();
+                    else if(artifactId.equalsIgnoreCase("SecureShare_Util"))
+                        outFile += pom.addUtil();
+                    else
+                        outFile += pom.buildDependency(artifactId, isTest);
+                }
+                else
+                        outFile += pom.buildDependency(artifactId, isTest);
+                    
             }
             
+            if(project.toLowerCase().startsWith(("secureshare_")))
+                outFile += pom.buildDependency("junit-4.10", true);
+            
             outFile += pom.finishDependencies();
+            
+            if(project.toLowerCase().equals("SecureShare_MessageMigrator"))
+                outFile += pom.addShadePlugin();
+            
             outFile += pom.finishPOM();
             
             pom.writePOM(newProjectLocation, outFile);

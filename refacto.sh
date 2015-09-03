@@ -172,7 +172,7 @@ if [ "$migrate" = "true" ]; then
 	###questions
 	# FeedOutboxes
 	# LoopTestFileDiff
-	# VersaLexWS
+	# VersaLexWS -- yes
 	# AppletIntegrationWebProject
 	# MQLoopback
 	# updnd
@@ -234,18 +234,13 @@ if [ "$migrate" = "true" ]; then
 
 	echo "\nMigrating projects (api):"
 	#moveProject LexAPI UtilitiesAndServices api    no longer in the repo, stuff added to lexbean
-	moveProject lexbean ProtocolBeans api 
 	moveProject VLOSGIMgr UtilitiesAndServices api alreadyMaven
+	moveProject lexbean ProtocolBeans api 
 	moveProject mailbean UtilitiesAndServices api  	#this shouldn't go here
 	moveProject lexhelp UtilitiesAndServices api alreadyMaven
 	moveProject SecureShare_WebServices server api alreadyMaven
 	moveProject SecureShare_MessageMigrator server api alreadyMaven
 	
-	# moveProject cleouribitspeed UtilitiesAndServices/URISchemes api 
-	# moveProject cleourivlpipe UtilitiesAndServices/URISchemes api 
-	# moveProject cleourijms UtilitiesAndServices/URISchemes api 
-	# moveProject cleourimsmq UtilitiesAndServices/URISchemes api 
-
 	updateModule api ${projects_api[*]}
 
 	echo "\nMigrating projects (protocol):"
@@ -269,6 +264,11 @@ if [ "$migrate" = "true" ]; then
 	moveProject streembean ProtocolBeans protocol
 	moveProject wsbean ProtocolBeans protocol
 
+	moveProject cleouribitspeed UtilitiesAndServices/URISchemes protocol 
+	moveProject cleourivlpipe UtilitiesAndServices/URISchemes protocol 
+	moveProject cleourijms UtilitiesAndServices/URISchemes protocol 
+	moveProject cleourimsmq UtilitiesAndServices/URISchemes protocol 
+
 	updateModule protocol ${projects_protocol[*]}
 
 	echo "\nMigrating projects (product):"
@@ -278,10 +278,6 @@ if [ "$migrate" = "true" ]; then
 	moveProject VLTrader . product
 	moveProject Harmony . product
 	moveProject VLProxy . product 
-	moveProject cleouribitspeed UtilitiesAndServices/URISchemes product 
-	moveProject cleourivlpipe UtilitiesAndServices/URISchemes product 
-	moveProject cleourijms UtilitiesAndServices/URISchemes product 
-	moveProject cleourimsmq UtilitiesAndServices/URISchemes product
 
 	updateModule product ${projects_product[*]}
 fi

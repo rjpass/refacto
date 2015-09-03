@@ -1182,6 +1182,12 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <artifactId>jfreechart</artifactId>\n" +
 "            <version>${jfreechart.version}</version>\n" +
 "        </dependency>");
+        
+        put("jms", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>jms</artifactId>\n" +
+"            <version>${jms.version}</version>\n" +
+"        </dependency>");
     }
     
 }

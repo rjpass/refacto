@@ -927,6 +927,32 @@
             <artifactId>share</artifactId>
             <version>${unknown-thirdparty.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>${jersey-client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-logging.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cleo</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
     </dependencies>
 
 <!--
@@ -1014,6 +1040,10 @@
                         <resource>
                           <directory>${basedir}/../../api/mailbean/src/main/java</directory>
                           <!-- <directory>${basedir}/../../base/mailbean/src/main/java</directory> -->
+                          <filtering>false</filtering>
+                        </resource>
+                        <resource>
+                          <directory>${basedir}/../../api/VLOSGIMgr/src/main/java</directory>
                           <filtering>false</filtering>
                         </resource>
                       </resources>              

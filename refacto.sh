@@ -87,24 +87,58 @@ updateModule() {
 
 # usage:	Diffs a jar created with mvn with the one from lib hydrator
 # returns: 	0 = same, 1 = different
+
+# dnsjava -- can't find it
+# confdecrypt -- can't find it
+# jcifs* -- problem building
+# base64 -- can't find it
+# 
+
+
 doDiff() {
 	cd ~/code/refacto
 	mkdir temp1
 	cd temp1
-	jar xf ../../efss-maven/$1/$2/target/com.cleo.$1.$2-5.2.1-SNAPSHOT.jar > /dev/null 2>&1
+	jar xf ../../efss-maven/$1/$2/target/com.cleo.$1.$2-5.2.2-SNAPSHOT.jar > /dev/null 2>&1
 	rm -rf META-INF/
+
+	jarPath=~/VersaLex/lib/$2
+
+	if [ "$2" = "vaadin-recaptcha" ]; then
+		jarPath=~/VersaLex/lib/vaadin/$2
+	elif [ "$2" = "DocumentSearchDBClient" ]; then
+		jarPath=~/VersaLex/lib/docdb/$2
+	elif [ "$2" = "ftpbean" ]; then
+		jarPath=~/VersaLex/lib/ftp
+	elif [ "$2" = "ftpsbean" ]; then
+		jarPath=~/VersaLex/lib/ftps
+	elif [ "$2" = "SecureShare_POJO" ]; then
+		jarPath=~/VersaLex/lib/secureshare/$2
+	elif [ "$2" = "SecureShare_API" ]; then
+		jarPath=~/VersaLex/lib/secureshare/$2
+	elif [ "$2" = "SecureShare_NoSQL" ]; then
+		jarPath=~/VersaLex/lib/secureshare/$2
+	elif [ "$2" = "SecureShare_Data" ]; then
+		jarPath=~/VersaLex/lib/secureshare/$2
+	elif [ "$2" = "SecureShare_m9_API" ]; then
+		jarPath=~/VersaLex/lib/secureshare/$2
+	elif [ "$2" = "SecureShare_Util" ]; then
+		jarPath=~/VersaLex/lib/secureshare/$2
+	elif [ "$2" = "SecureShare_WebServices" ]; then
+		jarPath=~/VersaLex/lib/secureshare/$2
+	fi
 
 	cd ..
 	mkdir temp2
 	cd temp2
-	jar xf ~/VersaLex/lib/$2.jar > /dev/null 2>&1
+	jar xf $jarPath.jar > /dev/null 2>&1
 	rm -rf META-INF/
 
 	#hack the 8th byte of the class file to avoid source discrepencies
 	#see class layout at https://en.wikipedia.org/wiki/Java_class_file#General_layout
 	find . -name \*.class -execdir sh -c "echo {}; printf '\x33' | dd of={} bs=1 seek=7 conv=notrunc" \; > /dev/null 2>&1
 
-	diff -r ../temp1/ . > /dev/null 2>&1
+	diff -r ../temp1/ . | grep "^Only" > /dev/null 2>&1
 	retVal=$?
 
 	cd ..
@@ -305,7 +339,7 @@ if [ "$dif" = "true" ] && [ $mvnStatus = 0 ]; then
 	do
 		result=$(doDiff base $i)
 		if [ "$result" != "0" ]; then
-			printf "$i... not the same!\n"
+			printf "    $i... not the same!\n"
 		fi
 	done
 
@@ -313,7 +347,7 @@ if [ "$dif" = "true" ] && [ $mvnStatus = 0 ]; then
 	do
 		result=$(doDiff util $i)
 		if [ "$result" != "0" ]; then
-			printf "$i... not the same!\n"
+			printf "    $i... not the same!\n"
 		fi
 	done
 
@@ -321,7 +355,7 @@ if [ "$dif" = "true" ] && [ $mvnStatus = 0 ]; then
 	do
 		result=$(doDiff api $i)
 		if [ "$result" != "0" ]; then
-			printf "$i... not the same!\n"
+			printf "    $i... not the same!\n"
 		fi
 	done
 
@@ -329,7 +363,7 @@ if [ "$dif" = "true" ] && [ $mvnStatus = 0 ]; then
 	do
 		result=$(doDiff protocol $i)
 		if [ "$result" != "0" ]; then
-			printf "$i... not the same!\n"
+			printf "    $i... not the same!\n"
 		fi
 	done
 
@@ -337,7 +371,7 @@ if [ "$dif" = "true" ] && [ $mvnStatus = 0 ]; then
 	do
 		result=$(doDiff product $i)
 		if [ "$result" != "0" ]; then
-			printf "$i... not the same!\n"
+			printf "    $i... not the same!\n"
 		fi
 	done
 fi

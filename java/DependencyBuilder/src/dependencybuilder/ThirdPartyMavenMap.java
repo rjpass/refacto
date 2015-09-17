@@ -1188,6 +1188,12 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <artifactId>jms</artifactId>\n" +
 "            <version>${jms.version}</version>\n" +
 "        </dependency>");
+        
+        put("openbpm", "\n        <dependency>\n" +
+"            <groupId>com.cleo</groupId>\n" +
+"            <artifactId>openbpm</artifactId>\n" +
+"            <version>${openbpm.version}</version>\n" +
+"        </dependency>");
     }
     
 }

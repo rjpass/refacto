@@ -1,5 +1,6 @@
 #!/bin/sh
 
+projectsOldLocation=()
 projectsLocation=()
 projects_base=()
 projects_util=()
@@ -53,6 +54,7 @@ moveProject() {
 		projectName="vlsnmpagent"
 	fi 
 
+	projectsOldLocation+=("$oldProjectLocation/$projectName")
 	projectsLocation+=("$newProjectLocation/$projectName")
 	
 	if [ "$newProjectLocation" = "base" ]; then
@@ -166,6 +168,9 @@ build=""
 #diff the jars after conversion
 dif=""
 
+#destroy the old folders
+destroy=""
+
 mvnStatus=0
 
 while [ "$1" != "" ]; do 
@@ -179,6 +184,8 @@ while [ "$1" != "" ]; do
 		-b | --build )		build="true"
 							;;
 		-d | --diff )		dif="true"
+							;;
+		--destroy )			destroy="true"
 							;;
 	esac
 	shift
@@ -203,9 +210,8 @@ if [ "$migrate" = "true" ]; then
 	projects_api+=("megacol")
 
 	###questions
-	# CLJRDeploy
-	# FeedOutboxes
-	# LoopTestFileDiff
+	# CLJRDeploy - the deps for this project don't exist in nexus, we don't build it in nexus... used for JReports installer?
+	# LoopTestFileDiff  - the deps take in lexicom -- do we need this?
 	# VersaLexWS -- yes
 	# AppletIntegrationWebProject
 	# MQLoopback
@@ -248,6 +254,7 @@ if [ "$migrate" = "true" ]; then
 	moveProject SecureShare_NoSQL server base alreadyMaven
 	moveProject SecureShare_Data server base alreadyMaven
 	moveProject DocumentSearchDBClient UtilitiesAndServices base alreadyMaven
+	moveProject FeedOutboxes UtilitiesAndServices base
 	
 	updateModule base ${projects_base[*]}
 
@@ -273,6 +280,7 @@ if [ "$migrate" = "true" ]; then
 	echo "\nMigrating projects (api):"
 	moveProject VLOSGIMgr UtilitiesAndServices api alreadyMaven
 	moveProject lexbean ProtocolBeans api 
+	moveProject VersaLexWS UtilitiesAndServices api
 	moveProject mailbean UtilitiesAndServices api  	#this shouldn't go here
 	moveProject lexhelp UtilitiesAndServices api alreadyMaven
 	moveProject SecureShare_WebServices server api alreadyMaven
@@ -381,5 +389,28 @@ if [ "$dif" = "true" ] && [ $mvnStatus = 0 ]; then
 		fi
 	done
 fi
-# echo "\nCleaning up old directories"
+
+if [ "$destroy" = "true" ]; then
+	echo "\nCleaning up old directories"
+	cd ../efss-maven
+	for i in "${projectsOldLocation[@]}"
+	do
+		echo "Removing $i"
+		rm -rf $i
+	done
+
+	echo "Removing ProtocolBeans folder"
+	rm -rf ProtocolBeans
+
+	echo "Removing server folder"
+	rm -rf server
+
+	echo "Removing Servers folder"
+	rm -rf Servers
+
+	echo "Removing jcifs folder" 
+	rm -rf ThirdParty/jcifs 
+fi
+
+
 

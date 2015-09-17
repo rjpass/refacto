@@ -82,6 +82,7 @@
         <JREngine.version>${unknown-thirdparty.version}</JREngine.version>
         <jcommon.version>${unknown-thirdparty.version}</jcommon.version>
         <jms.version>${unknown-thirdparty.version}</jms.version>
+        <openbpm.version>${unknown-thirdparty.version}</openbpm.version>
         
         <!-- Known third-party -->
         <karaf.version>3.0.3</karaf.version>

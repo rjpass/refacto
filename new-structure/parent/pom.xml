@@ -206,6 +206,8 @@
         <maven.shade.version>2.3</maven.shade.version>
         <elasticsearch.version>1.6.0</elasticsearch.version>
         <jfreechart.version>1.0.9</jfreechart.version>
+        <snakeyaml.version>1.16</snakeyaml.version>
+        <jest.version>0.1.6</jest.version>
     </properties>
 
 

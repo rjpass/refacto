@@ -1194,6 +1194,19 @@ public class ThirdPartyMavenMap extends HashMap<String,String> {
 "            <artifactId>openbpm</artifactId>\n" +
 "            <version>${openbpm.version}</version>\n" +
 "        </dependency>");
+        
+        put("snakeyaml", "\n        <dependency>\n" +
+"            <groupId>org.yaml</groupId>\n" +
+"            <artifactId>snakeyaml</artifactId>\n" +
+"            <version>${snakeyaml.version}</version>\n" +
+"        </dependency>"); 
+        
+        put("jest", "\n        <dependency>\n" +
+"            <groupId>io.searchbox</groupId>\n" +
+"            <artifactId>jest</artifactId>\n" +
+"            <version>${jest.version}</version>\n" +
+"        </dependency>"); 
+        
     }
     
 }

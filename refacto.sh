@@ -20,6 +20,8 @@ moveProject() {
 
 	if [ "$projectName" = "snmpagent" ]; then
 		projectPath="../efss-maven/$newProjectLocation/vlsnmpagent"
+	elif [ "$projectName" = "TestServer" ]; then
+		projectPath="../efss-maven/$newProjectLocation/UnifyTestServer"
 	fi 
 
 	if [ "$special" = "" ]; then
@@ -212,22 +214,20 @@ if [ "$migrate" = "true" ]; then
 	###questions
 	# CLJRDeploy - the deps for this project don't exist in nexus, we don't build it in nexus... used for JReports installer?
 	# LoopTestFileDiff  - the deps take in lexicom -- do we need this?
-	# VersaLexWS -- yes
-	# AppletIntegrationWebProject
 	# MQLoopback
 	# updnd
 	# PortConnector
+	# Look at the directories left (ex; UtilitiesAndServices has projects)
+	#
+	# NOTE
+	# ----------------------
 	# snmpagent created a jar called vlsnmpagent
-	# jacob
-	# faxbean
+	# Renamed ftp and ftps jars to ftpbean and ftpsbean
 	# 
 	# Circular Dependencies
 	# ----------------------
 	# SftpServer depends on lexbean
-	# 
-	# Other
-	# ----------------------
-	# Renamed ftp and ftps jars to ftpbean and ftpsbean
+	
 
 	#remove old reqs and rebuild as projects are added
 	rm cleo.prop 
@@ -320,13 +320,15 @@ if [ "$migrate" = "true" ]; then
 
 	echo "\nMigrating projects (product):"
 	moveProject SftpServer Servers product
-	moveProject TestServer server product alreadyMaven
 	moveProject LexiCom . product 
 	moveProject VLTrader . product
 	moveProject Harmony . product
 	moveProject VLProxy . product 
 
 	updateModule product ${projects_product[*]}
+
+	echo "\nMigrating projects (Applications)"
+	moveProject TestServer server Applications alreadyMaven
 fi
 
 if [ "$build" = "true" ]; then

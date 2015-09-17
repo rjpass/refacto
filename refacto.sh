@@ -203,6 +203,7 @@ if [ "$migrate" = "true" ]; then
 	projects_api+=("megacol")
 
 	###questions
+	# CLJRDeploy
 	# FeedOutboxes
 	# LoopTestFileDiff
 	# VersaLexWS -- yes
@@ -211,13 +212,16 @@ if [ "$migrate" = "true" ]; then
 	# updnd
 	# PortConnector
 	# snmpagent created a jar called vlsnmpagent
+	# jacob
+	# faxbean
 	# 
 	# Circular Dependencies
 	# ----------------------
 	# SftpServer depends on lexbean
-	# lexbean and LexAPI --done
-	# mailbean is dependent on lexbean --done
 	# 
+	# Other
+	# ----------------------
+	# Renamed ftp and ftps jars to ftpbean and ftpsbean
 
 	#remove old reqs and rebuild as projects are added
 	rm cleo.prop 
@@ -227,7 +231,7 @@ if [ "$migrate" = "true" ]; then
 	moveProject XMLLogger UtilitiesAndServices base
 	moveProject common UtilitiesAndServices base
 	moveProject aspirin ThirdParty base
-	#moveProject mailbean UtilitiesAndServices base 	
+	#moveProject mailbean UtilitiesAndServices base   this is where it should go	
 	moveProject VLMetrics UtilitiesAndServices base
 	moveProject snmpagent UtilitiesAndServices base 
 	moveProject vlembeddeddb UtilitiesAndServices base
@@ -262,11 +266,11 @@ if [ "$migrate" = "true" ]; then
 	moveProject SecureShare_m9_API server util alreadyMaven
 	moveProject SecureShare_Util server util alreadyMaven
 	moveProject SecureShare_Builders server util alreadyMaven
+	moveProject LexiComLicenser_2 UtilitiesAndServices util alreadyMaven
 
 	updateModule util ${projects_util[*]}
 
 	echo "\nMigrating projects (api):"
-	#moveProject LexAPI UtilitiesAndServices api    no longer in the repo, stuff added to lexbean
 	moveProject VLOSGIMgr UtilitiesAndServices api alreadyMaven
 	moveProject lexbean ProtocolBeans api 
 	moveProject mailbean UtilitiesAndServices api  	#this shouldn't go here
@@ -301,6 +305,8 @@ if [ "$migrate" = "true" ]; then
 	moveProject cleourivlpipe UtilitiesAndServices/URISchemes protocol 
 	moveProject cleourijms UtilitiesAndServices/URISchemes protocol 
 	moveProject cleourimsmq UtilitiesAndServices/URISchemes protocol 
+	moveProject UnifyTrustURI UtilitiesAndServices/URISchemes protocol alreadyMaven
+	moveProject cleouriwebhdfs UtilitiesAndServices/URISchemes protocol alreadyMaven
 
 	updateModule protocol ${projects_protocol[*]}
 

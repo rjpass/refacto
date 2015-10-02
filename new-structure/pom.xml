@@ -167,6 +167,25 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.10</version>
+                    <executions>
+                        <execution>
+                            <id>purge-megacol</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>purge-local-repository</goal>
+                            </goals>
+                            <configuration>
+                                <manualIncludes>
+                                    <manualInclude>com.cleo.api:megacol</manualInclude>
+                                </manualIncludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>

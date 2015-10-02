@@ -552,7 +552,7 @@
             <version>${mail.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.cleo.base</groupId>
+            <groupId>com.cleo.api</groupId>
             <artifactId>mailbean</artifactId>
             <version>${version.cleo}</version>
         </dependency>
@@ -879,7 +879,7 @@
         </dependency>
         <dependency>
             <groupId>com.cleo.base</groupId>
-            <artifactId>snmpagent</artifactId>
+            <artifactId>vlsnmpagent</artifactId>
             <version>${version.cleo}</version>
         </dependency>
         <dependency>

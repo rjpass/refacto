@@ -242,7 +242,6 @@ if [ "$migrate" = "true" ]; then
 	moveProject snmpagent UtilitiesAndServices base 
 	moveProject vlembeddeddb UtilitiesAndServices base
 	moveProject dnsjava ThirdParty base
-	#moveProject CLJRDeploy UtilitiesAndServices base
 	moveProject vaadin-recaptcha UtilitiesAndServices base
 	moveProject Jcapi ThirdParty base
 	moveProject jcifs-1.3.14 ThirdParty/Jcifs base		#this one is a little weird -- look into it
@@ -335,7 +334,7 @@ if [ "$build" = "true" ]; then
 	echo "\nBuilding"
 	cd ../efss-maven
 	mvn -DskipTests -l ../refacto/mvn.log				# tests can't build
-	#mvn -l ../mvn.log
+	#mvn -l ../refacto/mvn.log
 	mvnStatus=$?
 	if [ $mvnStatus = 0 ]; then
 		echo "    MVN Build Successful"
@@ -392,7 +391,7 @@ if [ "$dif" = "true" ] && [ $mvnStatus = 0 ]; then
 	done
 fi
 
-if [ "$destroy" = "true" ]; then
+if [ "$destroy" = "true" ] && [ $mvnStatus = 0 ]; then
 	echo "\nCleaning up old directories"
 	cd ../efss-maven
 	for i in "${projectsOldLocation[@]}"
@@ -412,6 +411,9 @@ if [ "$destroy" = "true" ]; then
 
 	echo "Removing jcifs folder" 
 	rm -rf ThirdParty/jcifs 
+
+	echo "Removing snmpagent folder"
+	rm -rf UtilitiesAndServices/snmpagent
 fi
 
 

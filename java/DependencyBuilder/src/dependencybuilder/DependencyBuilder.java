@@ -111,36 +111,7 @@ public class DependencyBuilder {
                     }
                 }
                 
-                //reconfigure the protocol beans with megacol to support builds
-                if  ( (parent.equals("protocol") || project.equals("lexbean")) && 
-                        (
-                            parsedValue.equals("lexbean") ||
-                            parsedValue.equals("as2bean") ||
-                            parsedValue.equals("ebicsbean") ||
-                            parsedValue.equals("ebxmlbean") ||
-                            parsedValue.equals("ftpbean") ||
-                            parsedValue.equals("ftpsbean") ||
-                            parsedValue.equals("httpbean") ||
-                            parsedValue.equals("httpsbean") ||
-                            parsedValue.equals("mqbean") ||
-                            parsedValue.equals("oftpbean") ||
-                            parsedValue.equals("rosettabean") ||
-                            parsedValue.equals("smtpbean") ||
-                            parsedValue.equals("wsbean") ||
-                            parsedValue.equals("webserver") ||
-                            parsedValue.equals("mailbean") ||
-                            parsedValue.equals("lexhelp")
-                        )   
-                    )
-                {
-                    if(!addedMegacol)
-                        pomXML += pom.buildDependency("megacol", false, "com.cleo.api", "5.2.2-SNAPSHOT");
-                    addedMegacol = true;
-                }
-                else
-                {
-                    pomXML += pom.buildDependency(parsedValue, isTest);
-                }
+                pomXML += pom.buildDependency(parsedValue, isTest);
             }
         }
         
